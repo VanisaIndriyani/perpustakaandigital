@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminEmail = env('ADMIN_EMAIL', 'admin@perpustakaan.com');
+        $adminEmail = env('ADMIN_EMAIL', 'admin@perpustakaan.test');
         $adminPassword = env('ADMIN_PASSWORD', 'Admin12345!');
 
         User::query()->updateOrCreate(
@@ -24,6 +24,18 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => Hash::make($adminPassword),
+                'role' => 'admin',
+            ],
+        );
+
+        User::query()->updateOrCreate(
+            ['email' => 'mahasiswa@perpustakaan.test'],
+            [
+                'name' => 'Mahasiswa Demo',
+                'nim' => '2026001',
+                'phone' => '082371114136',
+                'password' => Hash::make('Mahasiswa123!'),
+                'role' => 'mahasiswa',
             ],
         );
 
@@ -31,6 +43,7 @@ class DatabaseSeeder extends Seeder
             User::factory()->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
+                'role' => 'mahasiswa',
             ]);
         }
 

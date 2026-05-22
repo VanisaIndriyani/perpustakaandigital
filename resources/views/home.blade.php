@@ -38,6 +38,7 @@
                             'buku' => 'koleksi.buku',
                             'e-book' => 'koleksi.ebook',
                             'skripsi' => 'koleksi.skripsi',
+                            'ppl-kk' => 'koleksi.pplkk',
                             default => 'home',
                         };
                     @endphp
@@ -66,6 +67,7 @@
                     'buku' => 'koleksi.buku',
                     'e-book' => 'koleksi.ebook',
                     'skripsi' => 'koleksi.skripsi',
+                    'ppl-kk' => 'koleksi.pplkk',
                     default => 'home',
                 };
             @endphp
@@ -96,6 +98,7 @@
                                             'jurnal' => 'bg-lime-600',
                                             'e-jurnal' => 'bg-green-600',
                                             'skripsi' => 'bg-amber-500',
+                                            'ppl-kk' => 'bg-emerald-500',
                                             default => 'bg-emerald-600',
                                         };
                                     @endphp
@@ -139,7 +142,7 @@
 
     <section class="mt-12 rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8" data-home-collection>
         @php
-            $tabOrder = ['jurnal', 'e-jurnal', 'buku', 'e-book', 'skripsi'];
+            $tabOrder = ['jurnal', 'e-jurnal', 'buku', 'e-book', 'skripsi', 'ppl-kk'];
         @endphp
 
         <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -189,6 +192,7 @@
                         'buku' => 'koleksi.buku',
                         'e-book' => 'koleksi.ebook',
                         'skripsi' => 'koleksi.skripsi',
+                        'ppl-kk' => 'koleksi.pplkk',
                         default => 'home',
                     };
                 @endphp
@@ -214,6 +218,7 @@
                                                             'jurnal' => 'bg-lime-600',
                                                             'e-jurnal' => 'bg-green-600',
                                                             'skripsi' => 'bg-amber-500',
+                                                            'ppl-kk' => 'bg-emerald-500',
                                                             default => 'bg-emerald-600',
                                                         };
                                                     @endphp

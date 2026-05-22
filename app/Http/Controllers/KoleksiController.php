@@ -14,6 +14,7 @@ class KoleksiController extends Controller
         'jurnal' => 'jurnal',
         'e-jurnal' => 'e-jurnal',
         'skripsi' => 'skripsi',
+        'ppl-kk' => 'ppl-kk',
     ];
 
     public function home()

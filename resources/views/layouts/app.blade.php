@@ -40,16 +40,35 @@
                 <a href="{{ route('koleksi.buku') }}" class="{{ request()->routeIs('koleksi.buku') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-medium transition">Buku</a>
                 <a href="{{ route('koleksi.ebook') }}" class="{{ request()->routeIs('koleksi.ebook') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-medium transition">E-Book</a>
                 <a href="{{ route('koleksi.skripsi') }}" class="{{ request()->routeIs('koleksi.skripsi') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-medium transition">Skripsi</a>
+                <a href="{{ route('koleksi.pplkk') }}" class="{{ request()->routeIs('koleksi.pplkk') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-medium transition">PPL KK</a>
+                <a href="{{ route('mahasiswa.turnitin.index') }}" class="{{ request()->routeIs('mahasiswa.turnitin.*') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-medium transition">Turnitin</a>
             </nav>
 
             <div class="flex items-center gap-2">
-                <a href="{{ route('admin.dashboard') }}" class="hidden items-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50 md:inline-flex">
-                    <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                        <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Login
-                </a>
+                @auth
+                    @if(auth()->user()->role === 'mahasiswa')
+                        <a href="{{ route('mahasiswa.dashboard') }}" class="hidden items-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50 md:inline-flex">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Akun
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}" class="hidden md:block">
+                            @csrf
+                            <button type="submit" class="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 shadow-soft transition hover:bg-rose-100">Logout</button>
+                        </form>
+                    @endif
+                @endauth
+                @guest
+                    <a href="{{ route('login') }}" class="hidden items-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50 md:inline-flex">
+                        <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Login
+                    </a>
+                @endguest
                 <button type="button" data-mobile-toggle="mobileNav" class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-soft transition hover:bg-slate-50 md:hidden">
                     <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -66,13 +85,32 @@
                 <a href="{{ route('koleksi.buku') }}" class="{{ request()->routeIs('koleksi.buku') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-700 hover:bg-slate-50' }} rounded-xl px-3 py-2 text-sm font-medium transition">Buku</a>
                 <a href="{{ route('koleksi.ebook') }}" class="{{ request()->routeIs('koleksi.ebook') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-700 hover:bg-slate-50' }} rounded-xl px-3 py-2 text-sm font-medium transition">E-Book</a>
                 <a href="{{ route('koleksi.skripsi') }}" class="{{ request()->routeIs('koleksi.skripsi') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-700 hover:bg-slate-50' }} rounded-xl px-3 py-2 text-sm font-medium transition">Skripsi</a>
-                <a href="{{ route('admin.dashboard') }}" class="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
-                    <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                        <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Login Admin
-                </a>
+                <a href="{{ route('koleksi.pplkk') }}" class="{{ request()->routeIs('koleksi.pplkk') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-700 hover:bg-slate-50' }} rounded-xl px-3 py-2 text-sm font-medium transition">PPL KK</a>
+                <a href="{{ route('mahasiswa.turnitin.index') }}" class="{{ request()->routeIs('mahasiswa.turnitin.*') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-700 hover:bg-slate-50' }} rounded-xl px-3 py-2 text-sm font-medium transition">Turnitin</a>
+                @guest
+                    <a href="{{ route('login') }}" class="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                        <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Login
+                    </a>
+                @endguest
+                @auth
+                    @if(auth()->user()->role === 'mahasiswa')
+                        <a href="{{ route('mahasiswa.dashboard') }}" class="col-span-2 flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-white px-3 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Akun
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}" class="col-span-2">
+                            @csrf
+                            <button type="submit" class="w-full rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 shadow-soft transition hover:bg-rose-100">Logout</button>
+                        </form>
+                    @endif
+                @endauth
             </div>
         </div>
     </div>
@@ -161,6 +199,7 @@
                     <a class="text-slate-600 transition hover:text-slate-900" href="{{ route('koleksi.buku') }}">Buku</a>
                     <a class="text-slate-600 transition hover:text-slate-900" href="{{ route('koleksi.ebook') }}">E-Book</a>
                     <a class="text-slate-600 transition hover:text-slate-900" href="{{ route('koleksi.skripsi') }}">Skripsi</a>
+                    <a class="text-slate-600 transition hover:text-slate-900" href="{{ route('koleksi.pplkk') }}">PPL KK</a>
                 </div>
             </div>
 
@@ -175,7 +214,7 @@
                         <span class="font-semibold text-slate-800">Kunjungan</span>
                         <span>Senin–Jumat</span>
                     </div>
-                    <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">Masuk Admin</a>
+                    <a href="{{ route('mahasiswa.turnitin.index') }}" class="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">Layanan Turnitin</a>
                 </div>
             </div>
         </div>
@@ -185,8 +224,6 @@
         <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
             <div>© {{ now()->year }} {{ config('app.name') }}. All rights reserved.</div>
             <div class="flex flex-wrap items-center gap-3">
-                <a class="text-slate-500 transition hover:text-slate-700" href="{{ route('admin.dashboard') }}">Admin</a>
-                <span class="text-slate-300">•</span>
                 <span class="text-slate-500">Tema emerald minimalis modern.</span>
             </div>
         </div>

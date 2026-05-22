@@ -23,6 +23,18 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            if ($request->user()?->role !== 'admin') {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()
+                    ->withInput($request->only('email'))
+                    ->withErrors([
+                        'email' => 'Akun ini bukan admin.',
+                    ]);
+            }
+
             return redirect()->intended(route('admin.dashboard'));
         }
 
@@ -43,4 +55,3 @@ class AuthController extends Controller
         return redirect()->route('admin.login');
     }
 }
-
