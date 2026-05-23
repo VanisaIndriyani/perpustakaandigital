@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Peminjaman extends Model
 {
+    protected $table = 'peminjamans';
+
     protected $fillable = [
         'user_id',
         'koleksi_id',
@@ -45,4 +47,3 @@ class Peminjaman extends Model
         return $this->belongsTo(Koleksi::class);
     }
 }
-

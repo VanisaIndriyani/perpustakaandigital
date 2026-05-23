@@ -32,19 +32,24 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            if ($request->user()?->role !== 'mahasiswa') {
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
+            $userRole = $request->user()?->role;
+            $default = $userRole === 'admin'
+                ? route('admin.dashboard')
+                : route('mahasiswa.dashboard');
 
-                return back()
-                    ->withInput($request->only('email'))
-                    ->withErrors([
-                        'email' => 'Akun ini bukan mahasiswa.',
-                    ]);
+            $intended = $request->session()->get('url.intended');
+            $intendedPath = is_string($intended) ? (parse_url($intended, PHP_URL_PATH) ?: null) : null;
+            $intendedIsAdmin = is_string($intendedPath) && str_starts_with($intendedPath, '/admin');
+
+            if ($userRole === 'admin' && !$intendedIsAdmin) {
+                $request->session()->forget('url.intended');
             }
 
-            return redirect()->intended(route('mahasiswa.dashboard'));
+            if ($userRole !== 'admin' && $intendedIsAdmin) {
+                $request->session()->forget('url.intended');
+            }
+
+            return redirect()->intended($default);
         }
 
         return back()
@@ -57,7 +62,9 @@ class AuthController extends Controller
     public function showRegister()
     {
         if (Auth::check()) {
-            return redirect()->route('mahasiswa.dashboard');
+            return Auth::user()->role === 'admin'
+                ? redirect()->route('admin.dashboard')
+                : redirect()->route('mahasiswa.dashboard');
         }
 
         return view('mahasiswa.auth.register');
@@ -97,4 +104,3 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 }
-
