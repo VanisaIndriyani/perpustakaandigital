@@ -109,7 +109,7 @@
                     <div class="flex items-start justify-between gap-3">
                         <div class="min-w-0">
                             <div class="truncate text-sm font-semibold text-slate-900">{{ $item->judul }}</div>
-                            <div class="mt-1 text-xs text-slate-600">{{ $item->created_at->format('d/m/Y H:i') }}</div>
+                            <div class="mt-1 text-xs text-slate-600">{{ $item->created_at->format('d/m/Y H:i') }} WIB</div>
                         </div>
                         <span class="shrink-0 rounded-full px-3 py-1 text-xs font-semibold ring-1 {{ $badge[$item->status] ?? 'bg-slate-50 text-slate-700 ring-slate-200/60' }}">
                             {{ $statusOptions[$item->status] ?? $item->status }}
@@ -133,10 +133,10 @@
                                     <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-600 ring-1 ring-slate-200/60">Similarity: —</span>
                                 @endif
                                 @if($item->file_doc_url)
-                                    <a class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-slate-200/60 hover:text-emerald-800" href="{{ $item->file_doc_url }}" target="_blank" rel="noopener">File Dokumen</a>
+                                    <button type="button" data-doc-open="{{ $item->file_doc_url }}" data-doc-title="Dokumen: {{ $item->judul }}" class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-slate-200/60 hover:text-emerald-800">Lihat Dokumen</button>
                                 @endif
                                 @if($item->report_pdf_url)
-                                    <a class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-slate-200/60 hover:text-emerald-800" href="{{ $item->report_pdf_url }}" target="_blank" rel="noopener">Laporan</a>
+                                    <button type="button" data-doc-open="{{ $item->report_pdf_url }}" data-doc-title="Laporan: {{ $item->judul }}" class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-emerald-700 ring-1 ring-slate-200/60 hover:text-emerald-800">Lihat Laporan</button>
                                 @endif
                             </div>
                         </div>
@@ -229,6 +229,34 @@
             </div>
         </div>
     </div>
+
+    <div id="turnitinDocModal" class="fixed inset-0 z-[70] hidden">
+        <div data-doc-close class="absolute inset-0 bg-slate-900/50"></div>
+        <div class="absolute inset-x-0 top-6 mx-auto w-full max-w-5xl px-4 sm:px-6">
+            <div class="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-soft">
+                <div class="flex items-center justify-between gap-3 border-b border-slate-100 px-5 py-4">
+                    <div class="min-w-0">
+                        <div class="truncate text-sm font-semibold text-emerald-700">Lihat Dokumen</div>
+                        <div id="turnitinDocModalTitle" class="truncate text-lg font-semibold text-slate-900"></div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <a id="turnitinDocModalOpenNewTab" href="#" target="_blank" rel="noopener" class="hidden rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50 sm:inline-flex">Buka Tab</a>
+                        <button type="button" data-doc-close class="grid h-10 w-10 place-items-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-soft transition hover:bg-slate-50" aria-label="Tutup">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3 sm:p-4">
+                    <div class="h-[70vh] overflow-hidden rounded-2xl bg-white ring-1 ring-slate-200/60">
+                        <iframe id="turnitinDocModalFrame" title="Dokumen PDF" src="" class="h-full w-full"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
@@ -277,6 +305,41 @@
             if (event.key !== 'Escape') return;
             if (!modal || modal.classList.contains('hidden')) return;
             close();
+        });
+    })();
+
+    (() => {
+        const modal = document.getElementById('turnitinDocModal');
+        const frame = document.getElementById('turnitinDocModalFrame');
+        const title = document.getElementById('turnitinDocModalTitle');
+        const openNewTab = document.getElementById('turnitinDocModalOpenNewTab');
+
+        const open = (url, titleText) => {
+            if (!modal || !frame) return;
+            if (title) title.textContent = titleText || '';
+            if (openNewTab) openNewTab.setAttribute('href', url);
+            frame.setAttribute('src', url);
+            modal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        };
+
+        const close = () => {
+            if (!modal || !frame) return;
+            modal.classList.add('hidden');
+            frame.setAttribute('src', '');
+            document.body.classList.remove('overflow-hidden');
+        };
+
+        document.addEventListener('click', (event) => {
+            const openBtn = event.target.closest('[data-doc-open]');
+            if (openBtn) return open(openBtn.getAttribute('data-doc-open'), openBtn.getAttribute('data-doc-title'));
+
+            const closeBtn = event.target.closest('[data-doc-close]');
+            if (closeBtn) return close();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') close();
         });
     })();
 </script>
