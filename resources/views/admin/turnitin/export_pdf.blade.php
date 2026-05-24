@@ -183,7 +183,7 @@
                     <div class="subtitle">{{ config('app.name') }} • Perpustakaan Digital</div>
                 </td>
                 <td class="meta">
-                    <div>Dibuat: {{ $generatedAt->format('d/m/Y H:i') }}</div>
+                    <div>Dibuat: {{ $generatedAt->format('d/m/Y H:i') }} WIB</div>
                     <div>Total data: {{ $items->count() }}</div>
                 </td>
             </tr>
@@ -247,7 +247,7 @@
                 {{ !is_null($item->similarity_percent) ? ($item->similarity_percent . '%') : '—' }}
             </td>
             <td>
-                {{ $item->created_at?->format('d/m/Y H:i') }}
+                {{ $item->created_at?->format('d/m/Y H:i') }} WIB
             </td>
             <td>
                 <span class="wrap pre">{!! nl2br(e($item->catatan_admin ?: '—')) !!}</span>

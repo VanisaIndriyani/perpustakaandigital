@@ -32,6 +32,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
+            $request->user()?->forceFill(['last_login_at' => now()])->save();
+
             $userRole = $request->user()?->role;
             $default = $userRole === 'admin'
                 ? route('admin.dashboard')
@@ -91,6 +93,8 @@ class AuthController extends Controller
 
         Auth::login($user);
         $request->session()->regenerate();
+
+        $user->forceFill(['last_login_at' => now()])->save();
 
         return redirect()->route('mahasiswa.dashboard');
     }

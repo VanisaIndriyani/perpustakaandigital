@@ -49,6 +49,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/kategori/{kategori}', [\App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('kategori.update');
         Route::delete('/kategori/{kategori}', [\App\Http\Controllers\Admin\KategoriController::class, 'destroy'])->name('kategori.destroy');
 
+        Route::get('/mahasiswa', [\App\Http\Controllers\Admin\MahasiswaController::class, 'index'])->name('mahasiswa.index');
+
         Route::get('/koleksi', [\App\Http\Controllers\Admin\KoleksiController::class, 'index'])->name('koleksi.index');
         Route::get('/koleksi/create', [\App\Http\Controllers\Admin\KoleksiController::class, 'create'])->name('koleksi.create');
         Route::post('/koleksi', [\App\Http\Controllers\Admin\KoleksiController::class, 'store'])->name('koleksi.store');

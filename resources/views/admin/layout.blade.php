@@ -50,6 +50,13 @@
                                     </svg>
                                     Kategori
                                 </a>
+                                <a href="{{ route('admin.mahasiswa.index') }}" class="{{ request()->routeIs('admin.mahasiswa.*') ? 'bg-emerald-600 text-white' : 'text-slate-700 hover:bg-slate-50' }} flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition">
+                                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                        <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Mahasiswa
+                                </a>
                                 <a href="{{ route('admin.peminjaman.index') }}" class="{{ request()->routeIs('admin.peminjaman.*') ? 'bg-emerald-600 text-white' : 'text-slate-700 hover:bg-slate-50' }} flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition">
                                     <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M7 4h10a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.44L12 17l-6.26 2.94A.5.5 0 0 1 5 19.5V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -131,6 +138,13 @@
                                     <path d="M8 19h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
                                 </svg>
                                 Kategori
+                            </a>
+                            <a href="{{ route('admin.mahasiswa.index') }}" class="{{ request()->routeIs('admin.mahasiswa.*') ? 'bg-emerald-600 text-white' : 'text-slate-700 hover:bg-slate-50' }} flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition">
+                                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Mahasiswa
                             </a>
                             <a href="{{ route('admin.peminjaman.index') }}" class="{{ request()->routeIs('admin.peminjaman.*') ? 'bg-emerald-600 text-white' : 'text-slate-700 hover:bg-slate-50' }} flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition">
                                 <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">

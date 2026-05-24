@@ -193,7 +193,7 @@
                     <div class="subtitle">{{ config('app.name') }} • Perpustakaan Digital</div>
                 </td>
                 <td class="meta">
-                    <div>Dibuat: {{ $generatedAt->format('d/m/Y H:i') }}</div>
+                    <div>Dibuat: {{ $generatedAt->format('d/m/Y H:i') }} WIB</div>
                     <div>Total data: {{ $items->count() }}</div>
                 </td>
             </tr>
@@ -252,7 +252,7 @@
                 <span class="badge {{ $badgeClass }}">{{ $statusOptions[$item->status] ?? $item->status }}</span>
             </td>
             <td>
-                <div><span class="muted">Diajukan:</span> {{ $item->created_at?->format('d/m/Y H:i') }}</div>
+                <div><span class="muted">Diajukan:</span> {{ $item->created_at?->format('d/m/Y H:i') }} WIB</div>
                 @if($item->tanggal_pinjam)
                     <div><span class="muted">Pinjam:</span> {{ $item->tanggal_pinjam->format('d/m/Y') }}</div>
                 @endif
