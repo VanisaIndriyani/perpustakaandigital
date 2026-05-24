@@ -83,12 +83,18 @@ class KoleksiController extends Controller
     {
         $validated = $this->validatePayload($request);
 
+        $removeCover = (bool) $request->boolean('remove_cover');
+        $removePdf = (bool) $request->boolean('remove_file_pdf');
+
         if ($request->hasFile('cover')) {
             $newCover = $request->file('cover')->store('covers', 'public');
             if ($koleksi->cover) {
                 Storage::disk('public')->delete($koleksi->cover);
             }
             $validated['cover'] = $newCover;
+        } elseif ($removeCover && $koleksi->cover) {
+            Storage::disk('public')->delete($koleksi->cover);
+            $validated['cover'] = null;
         }
 
         if ($request->hasFile('file_pdf')) {
@@ -97,6 +103,9 @@ class KoleksiController extends Controller
                 Storage::disk('public')->delete($koleksi->file_pdf);
             }
             $validated['file_pdf'] = $newPdf;
+        } elseif ($removePdf && $koleksi->file_pdf) {
+            Storage::disk('public')->delete($koleksi->file_pdf);
+            $validated['file_pdf'] = null;
         }
 
         $koleksi->update($validated);
@@ -132,7 +141,8 @@ class KoleksiController extends Controller
             'deskripsi' => ['nullable', 'string'],
             'cover' => ['nullable', 'file', 'max:2048', 'mimetypes:image/jpeg,image/png,image/webp'],
             'file_pdf' => ['nullable', 'file', 'max:20480', 'mimetypes:application/pdf'],
+            'remove_cover' => ['nullable', 'boolean'],
+            'remove_file_pdf' => ['nullable', 'boolean'],
         ]);
     }
 }
-

@@ -25,7 +25,7 @@
                     Jelajahi jurnal, e-jurnal, buku, e-book, dan skripsi dengan tampilan elegan seperti portal repository kampus.
                 </p>
                 <div class="flex flex-wrap gap-2">
-                    <a href="{{ route('koleksi.jurnal') }}" class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Lihat Jurnal</a>
+                    <a href="{{ route('koleksi.jurnal') }}" class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Lihat Jurnal Kampus</a>
                     <a href="{{ route('koleksi.buku') }}" class="rounded-xl bg-emerald-500/30 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 transition hover:bg-emerald-500/40">Lihat Buku</a>
                 </div>
             </div>

@@ -63,13 +63,17 @@
             <div class="grid gap-4 md:grid-cols-2">
                 <div class="space-y-2">
                     <div class="text-sm font-semibold text-slate-700">Cover</div>
-                    @if($koleksi->cover_url)
+                    @if($koleksi->cover)
                         <div class="flex items-center gap-3">
                             <div class="h-16 w-12 overflow-hidden rounded-xl bg-slate-100 ring-1 ring-slate-200">
                                 <img src="{{ $koleksi->cover_url }}" alt="{{ $koleksi->judul }}" class="h-full w-full object-cover">
                             </div>
                             <div class="text-sm text-slate-600">Upload cover baru untuk mengganti.</div>
                         </div>
+                        <label class="inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 shadow-soft">
+                            <input type="checkbox" name="remove_cover" value="1" class="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-200" @checked(old('remove_cover'))>
+                            Hapus cover
+                        </label>
                     @endif
                     <input id="cover" name="cover" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-soft">
                     @error('cover') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
@@ -77,8 +81,12 @@
 
                 <div class="space-y-2">
                     <div class="text-sm font-semibold text-slate-700">File PDF</div>
-                    @if($koleksi->file_pdf_url)
+                    @if($koleksi->file_pdf)
                         <a href="{{ $koleksi->file_pdf_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Lihat PDF Saat Ini</a>
+                        <label class="mt-2 inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 shadow-soft">
+                            <input type="checkbox" name="remove_file_pdf" value="1" class="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-200" @checked(old('remove_file_pdf'))>
+                            Hapus PDF
+                        </label>
                     @endif
                     <input id="file_pdf" name="file_pdf" type="file" accept="application/pdf" class="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-soft">
                     @error('file_pdf') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
@@ -92,4 +100,3 @@
         </form>
     </div>
 @endsection
-

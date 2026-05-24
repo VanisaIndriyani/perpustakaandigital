@@ -8,9 +8,9 @@
             <div class="mt-1 text-sm text-slate-600">Buku + E-Book</div>
         </div>
         <div class="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-6 shadow-soft">
-            <div class="text-sm font-semibold text-emerald-700">Total Jurnal</div>
+            <div class="text-sm font-semibold text-emerald-700">Total Jurnal Kampus</div>
             <div class="mt-2 text-3xl font-semibold text-slate-900">{{ $totalJurnal }}</div>
-            <div class="mt-1 text-sm text-slate-600">Jurnal + E-Jurnal</div>
+            <div class="mt-1 text-sm text-slate-600">Jurnal Kampus + E-Jurnal</div>
         </div>
         <div class="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-6 shadow-soft">
             <div class="text-sm font-semibold text-emerald-700">Total Skripsi</div>

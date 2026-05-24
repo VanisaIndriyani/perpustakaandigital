@@ -88,6 +88,17 @@
                                 Download PDF
                             </a>
                         @endif
+                        <a href="{{ route($backRoute) }}" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 6h13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M3 6h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M8 12h13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M3 12h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M8 18h13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M3 18h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                            Lihat Semua
+                        </a>
                         @php($canBorrow = in_array($koleksi->jenis, ['buku', 'skripsi', 'ppl-kk'], true))
                         @if($canBorrow)
                             @auth

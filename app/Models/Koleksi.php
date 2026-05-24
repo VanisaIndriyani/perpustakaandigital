@@ -33,10 +33,10 @@ class Koleksi extends Model
         return [
             'buku' => 'Buku',
             'e-book' => 'E-Book',
-            'jurnal' => 'Jurnal',
+            'jurnal' => 'Jurnal Kampus',
             'e-jurnal' => 'E-Jurnal',
             'skripsi' => 'Skripsi',
-            'ppl-kk' => 'PPL KK',
+            'ppl-kk' => 'PPL',
         ];
     }
 
@@ -56,7 +56,7 @@ class Koleksi extends Model
             return null;
         }
 
-        return '/storage/' . ltrim($this->cover, '/');
+        return asset('storage/' . ltrim($this->cover, '/'));
     }
 
     public function getFilePdfUrlAttribute(): ?string
@@ -65,6 +65,6 @@ class Koleksi extends Model
             return null;
         }
 
-        return '/storage/' . ltrim($this->file_pdf, '/');
+        return asset('storage/' . ltrim($this->file_pdf, '/'));
     }
 }

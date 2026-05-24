@@ -46,7 +46,7 @@ class TurnitinSubmission extends Model
             return null;
         }
 
-        return '/storage/' . ltrim($this->file_doc, '/');
+        return asset('storage/' . ltrim($this->file_doc, '/'));
     }
 
     public function getReportPdfUrlAttribute(): ?string
@@ -55,7 +55,6 @@ class TurnitinSubmission extends Model
             return null;
         }
 
-        return '/storage/' . ltrim($this->report_pdf, '/');
+        return asset('storage/' . ltrim($this->report_pdf, '/'));
     }
 }
-

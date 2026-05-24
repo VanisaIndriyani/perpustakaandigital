@@ -153,7 +153,7 @@
                                 </span>
                                 <div class="space-y-1">
                                     <div class="text-sm font-semibold text-slate-900">Belum ada peminjaman</div>
-                                    <div class="text-sm text-slate-600">Buka detail koleksi (Buku/Skripsi/PPL KK) lalu ajukan peminjaman.</div>
+                                    <div class="text-sm text-slate-600">Buka detail koleksi (Buku/Skripsi/PPL) lalu ajukan peminjaman.</div>
                                     <div class="pt-2">
                                         <a href="{{ route('koleksi.buku') }}" class="inline-flex items-center justify-center rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">Cari Buku</a>
                                     </div>
