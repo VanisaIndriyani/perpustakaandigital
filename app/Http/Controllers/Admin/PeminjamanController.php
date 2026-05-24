@@ -117,4 +117,28 @@ class PeminjamanController extends Controller
 
         return $pdf->download('peminjaman-' . now()->format('Ymd-His') . '.pdf');
     }
+
+    public function buktiPdf(Peminjaman $peminjaman)
+    {
+        if (!in_array($peminjaman->status, ['approved', 'borrowed', 'returned'], true)) {
+            abort(404);
+        }
+
+        $peminjaman->loadMissing(['user', 'koleksi']);
+
+        $logoPath = public_path('logo.jpeg');
+        $logoDataUri = null;
+        if (is_file($logoPath)) {
+            $logoDataUri = 'data:image/jpeg;base64,' . base64_encode((string) file_get_contents($logoPath));
+        }
+
+        $pdf = Pdf::loadView('mahasiswa.peminjaman.bukti_pdf', [
+            'peminjaman' => $peminjaman,
+            'logoDataUri' => $logoDataUri,
+            'generatedAt' => now(),
+            'statusOptions' => Peminjaman::statusOptions(),
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->download('bukti-peminjaman-' . $peminjaman->id . '.pdf');
+    }
 }

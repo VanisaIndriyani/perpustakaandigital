@@ -23,6 +23,7 @@ Route::middleware(['auth', 'mahasiswa'])->name('mahasiswa.')->group(function () 
     Route::get('/akun', \App\Http\Controllers\Mahasiswa\DashboardController::class)->name('dashboard');
     Route::get('/peminjaman', [\App\Http\Controllers\Mahasiswa\PeminjamanController::class, 'index'])->name('peminjaman.index');
     Route::post('/peminjaman', [\App\Http\Controllers\Mahasiswa\PeminjamanController::class, 'store'])->name('peminjaman.store');
+    Route::get('/peminjaman/{peminjaman}/bukti/pdf', [\App\Http\Controllers\Mahasiswa\PeminjamanController::class, 'buktiPdf'])->name('peminjaman.bukti.pdf');
 
     Route::get('/turnitin', [\App\Http\Controllers\Mahasiswa\TurnitinController::class, 'index'])->name('turnitin.index');
     Route::get('/turnitin/submit', [\App\Http\Controllers\Mahasiswa\TurnitinController::class, 'create'])->name('turnitin.create');
@@ -60,6 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/peminjaman', [\App\Http\Controllers\Admin\PeminjamanController::class, 'index'])->name('peminjaman.index');
         Route::get('/peminjaman/export/pdf', [\App\Http\Controllers\Admin\PeminjamanController::class, 'exportPdf'])->name('peminjaman.export.pdf');
+        Route::get('/peminjaman/{peminjaman}/bukti/pdf', [\App\Http\Controllers\Admin\PeminjamanController::class, 'buktiPdf'])->name('peminjaman.bukti.pdf');
         Route::put('/peminjaman/{peminjaman}', [\App\Http\Controllers\Admin\PeminjamanController::class, 'update'])->name('peminjaman.update');
 
         Route::get('/turnitin', [\App\Http\Controllers\Admin\TurnitinController::class, 'index'])->name('turnitin.index');

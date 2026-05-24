@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mahasiswa;
 use App\Http\Controllers\Controller;
 use App\Models\Koleksi;
 use App\Models\Peminjaman;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,5 +66,32 @@ class PeminjamanController extends Controller
         return redirect()->route('mahasiswa.peminjaman.index')
             ->with('status', 'Pengajuan peminjaman berhasil dikirim.');
     }
-}
 
+    public function buktiPdf(Peminjaman $peminjaman)
+    {
+        if ((int) $peminjaman->user_id !== (int) Auth::id()) {
+            abort(403);
+        }
+
+        if (!in_array($peminjaman->status, ['approved', 'borrowed', 'returned'], true)) {
+            abort(404);
+        }
+
+        $peminjaman->loadMissing(['user', 'koleksi']);
+
+        $logoPath = public_path('logo.jpeg');
+        $logoDataUri = null;
+        if (is_file($logoPath)) {
+            $logoDataUri = 'data:image/jpeg;base64,' . base64_encode((string) file_get_contents($logoPath));
+        }
+
+        $pdf = Pdf::loadView('mahasiswa.peminjaman.bukti_pdf', [
+            'peminjaman' => $peminjaman,
+            'logoDataUri' => $logoDataUri,
+            'generatedAt' => now(),
+            'statusOptions' => Peminjaman::statusOptions(),
+        ])->setPaper('a4', 'portrait');
+
+        return $pdf->download('bukti-peminjaman-' . $peminjaman->id . '.pdf');
+    }
+}
