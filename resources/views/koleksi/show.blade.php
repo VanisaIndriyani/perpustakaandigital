@@ -87,14 +87,34 @@
                                 </svg>
                                 Lihat Dokumen
                             </button>
-                            <a href="{{ $koleksi->file_pdf_url }}" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">
+                            <a href="{{ $koleksi->file_pdf_url }}" download="{{ \Illuminate\Support\Str::slug($koleksi->judul) ?: 'dokumen' }}.pdf" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">
                                 <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
                                     <path d="M8 10l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                     <path d="M5 17v3h14v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                                Download PDF
+                                Download Dokumen
                             </a>
+                        @else
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button type="button" disabled class="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-semibold text-slate-500">
+                                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-8-6Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M9 15h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                    </svg>
+                                    Lihat Dokumen
+                                </button>
+                                <button type="button" disabled class="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm font-semibold text-slate-500">
+                                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                        <path d="M8 10l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M5 17v3h14v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    Download Dokumen
+                                </button>
+                                <div class="w-full text-xs font-semibold text-slate-500">Dokumen belum tersedia.</div>
+                            </div>
                         @endif
                         <a href="{{ route($backRoute) }}" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
                             <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
