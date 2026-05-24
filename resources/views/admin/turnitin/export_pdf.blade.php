@@ -5,7 +5,7 @@
     <title>Export Turnitin</title>
     <style>
         @page {
-            margin: 150px 34px 70px 34px;
+            margin: 210px 34px 70px 34px;
         }
         body {
             font-family: DejaVu Sans, Arial, sans-serif;
@@ -14,10 +14,10 @@
         }
         .header {
             position: fixed;
-            top: -130px;
+            top: -190px;
             left: 0;
             right: 0;
-            height: 130px;
+            height: 190px;
         }
         .brand {
             width: 100%;
@@ -60,7 +60,7 @@
             color: #334155;
         }
         .rule {
-            margin-top: 8px;
+            margin-top: 6px;
         }
         .rule-1 {
             border-top: 2px solid #111827;
@@ -70,14 +70,14 @@
             border-top: 1px solid #111827;
         }
         .doc-title {
-            margin-top: 8px;
+            margin-top: 6px;
             text-align: center;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: .06em;
         }
         .filters {
-            margin-top: 8px;
+            margin-top: 6px;
             font-size: 9px;
             color: #475569;
         }
@@ -209,7 +209,7 @@
     <div class="doc-title">LAPORAN TURNITIN</div>
     <div class="filters">
         Filter: Status: {{ $status !== '' ? ($statusOptions[$status] ?? $status) : 'Semua' }} | Pencarian: {{ $q !== '' ? $q : '—' }}<br>
-        Dicetak: {{ $generatedAt->format('d/m/Y H:i') }} WIB | Total data: {{ $items->count() }}
+        Dicetak: {{ $generatedAt->format('d/m/Y H:i') }}&nbsp;WIB | Total data: {{ $items->count() }}
     </div>
 </div>
 
@@ -265,7 +265,7 @@
                 {{ !is_null($item->similarity_percent) ? ($item->similarity_percent . '%') : '—' }}
             </td>
             <td>
-                {{ $item->created_at?->format('d/m/Y H:i') }} WIB
+                {{ $item->created_at?->format('d/m/Y H:i') }}&nbsp;WIB
             </td>
             <td>
                 <span class="wrap pre">{!! nl2br(e($item->catatan_admin ?: '—')) !!}</span>

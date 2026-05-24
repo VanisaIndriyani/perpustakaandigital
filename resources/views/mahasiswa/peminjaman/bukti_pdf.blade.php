@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>Bukti Peminjaman</title>
     <style>
-        @page { margin: 150px 34px 70px 34px; }
+        @page { margin: 210px 34px 70px 34px; }
         body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 11px; color: #0f172a; }
-        .header { position: fixed; top: -130px; left: 0; right: 0; height: 130px; }
+        .header { position: fixed; top: -190px; left: 0; right: 0; height: 190px; }
         .brand { width: 100%; }
         .brand td { vertical-align: middle; }
         .logo { width: 72px; height: 72px; overflow: hidden; }
@@ -16,11 +16,11 @@
         .kop-2 { font-size: 14px; font-weight: 800; letter-spacing: .04em; }
         .kop-3 { margin-top: 3px; font-size: 10px; font-weight: 700; }
         .kop-4 { margin-top: 3px; font-size: 9px; color: #334155; }
-        .rule { margin-top: 8px; }
+        .rule { margin-top: 6px; }
         .rule-1 { border-top: 2px solid #111827; }
         .rule-2 { margin-top: 2px; border-top: 1px solid #111827; }
-        .doc-title { margin-top: 8px; text-align: center; font-size: 11px; font-weight: 800; letter-spacing: .06em; }
-        .filters { margin-top: 8px; font-size: 9px; color: #475569; }
+        .doc-title { margin-top: 6px; text-align: center; font-size: 11px; font-weight: 800; letter-spacing: .06em; }
+        .filters { margin-top: 6px; font-size: 9px; color: #475569; }
         .meta { text-align: right; color: #475569; font-size: 10px; }
         .card { border: 1px solid #e2e8f0; border-radius: 14px; padding: 14px 16px; background: #ffffff; }
         .grid { width: 100%; border-collapse: collapse; }
@@ -66,7 +66,7 @@
     </div>
     <div class="doc-title">BUKTI PEMINJAMAN KOLEKSI</div>
     <div class="filters">
-        Dicetak: {{ $generatedAt->format('d/m/Y H:i') }} WIB | No. Bukti: {{ $peminjaman->id }}
+        Dicetak: {{ $generatedAt->format('d/m/Y H:i') }}&nbsp;WIB | No. Bukti: {{ $peminjaman->id }}
     </div>
 </div>
 
