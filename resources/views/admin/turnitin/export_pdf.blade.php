@@ -26,8 +26,8 @@
             vertical-align: middle;
         }
         .logo {
-            width: 72px;
-            height: 72px;
+            width: 86px;
+            height: 86px;
             overflow: hidden;
         }
         .logo img {
@@ -37,22 +37,22 @@
         }
         .kop {
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.15;
         }
         .kop-1 {
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: 800;
             letter-spacing: .04em;
         }
         .kop-2 {
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 16px;
+            font-weight: 900;
             letter-spacing: .04em;
         }
         .kop-3 {
             margin-top: 3px;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 11px;
+            font-weight: 800;
         }
         .kop-4 {
             margin-top: 3px;
@@ -184,7 +184,7 @@
 <div class="header">
     <table class="brand">
         <tr>
-            <td style="width:86px;">
+            <td style="width:100px;">
                 <div class="logo">
                     @if($logoDataUri)
                         <img src="{{ $logoDataUri }}" alt="Logo">
@@ -199,7 +199,7 @@
                 <div class="kop-4">Alamat : Jl. Tugu Tani Kel. Majelling Watang Sidenreng Rappang</div>
                 <div class="kop-4">E-mail : iaiddisidrap@gmail.com Website : www.ypdisrappang.ac.id</div>
             </td>
-            <td style="width:86px;"></td>
+            <td style="width:100px;"></td>
         </tr>
     </table>
     <div class="rule">

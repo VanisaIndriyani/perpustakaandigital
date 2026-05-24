@@ -9,12 +9,12 @@
         .header { position: fixed; top: -190px; left: 0; right: 0; height: 190px; }
         .brand { width: 100%; }
         .brand td { vertical-align: middle; }
-        .logo { width: 72px; height: 72px; overflow: hidden; }
+        .logo { width: 86px; height: 86px; overflow: hidden; }
         .logo img { width: 100%; height: 100%; object-fit: contain; }
-        .kop { text-align: center; line-height: 1.2; }
-        .kop-1 { font-size: 12px; font-weight: 700; letter-spacing: .04em; }
-        .kop-2 { font-size: 14px; font-weight: 800; letter-spacing: .04em; }
-        .kop-3 { margin-top: 3px; font-size: 10px; font-weight: 700; }
+        .kop { text-align: center; line-height: 1.15; }
+        .kop-1 { font-size: 13px; font-weight: 800; letter-spacing: .04em; }
+        .kop-2 { font-size: 16px; font-weight: 900; letter-spacing: .04em; }
+        .kop-3 { margin-top: 3px; font-size: 11px; font-weight: 800; }
         .kop-4 { margin-top: 3px; font-size: 9px; color: #334155; }
         .rule { margin-top: 6px; }
         .rule-1 { border-top: 2px solid #111827; }
@@ -33,16 +33,13 @@
         .footer { position: fixed; bottom: -50px; left: 0; right: 0; height: 50px; border-top: 1px solid #e2e8f0; padding-top: 10px; color: #64748b; font-size: 10px; }
         .footer-table { width: 100%; }
         .footer-table td:last-child { text-align: right; }
-        .sig { margin-top: 18px; width: 100%; }
-        .sig td { width: 50%; vertical-align: top; }
-        .sig-box { border: 1px dashed #cbd5e1; border-radius: 14px; height: 84px; }
     </style>
 </head>
 <body>
 <div class="header">
     <table class="brand">
         <tr>
-            <td style="width:86px;">
+            <td style="width:100px;">
                 <div class="logo">
                     @if($logoDataUri)
                         <img src="{{ $logoDataUri }}" alt="Logo">
@@ -57,7 +54,7 @@
                 <div class="kop-4">Alamat : Jl. Tugu Tani Kel. Majelling Watang Sidenreng Rappang</div>
                 <div class="kop-4">E-mail : iaiddisidrap@gmail.com Website : www.ypdisrappang.ac.id</div>
             </td>
-            <td style="width:86px;"></td>
+            <td style="width:100px;"></td>
         </tr>
     </table>
     <div class="rule">
@@ -118,24 +115,17 @@
     @endif
 </div>
 
-<table class="sig" cellspacing="0" cellpadding="0">
-    <tr>
-        <td style="padding-right:10px;">
-            <div class="label">Tanda tangan Mahasiswa</div>
-            <div class="sig-box"></div>
-        </td>
-        <td style="padding-left:10px;">
-            <div class="label">Tanda tangan Admin</div>
-            <div class="sig-box"></div>
-        </td>
-    </tr>
-</table>
-
 <div class="footer">
     <table class="footer-table">
         <tr>
             <td>© 2026 Perpustakaan Digital</td>
-            <td>Halaman <span class="page-number"></span></td>
+            <td>
+                <script type="text/php">
+                    if (isset($pdf)) {
+                        $pdf->page_text(500, 26, "Hal {PAGE_NUM} / {PAGE_COUNT}", null, 9, array(100,116,139));
+                    }
+                </script>
+            </td>
         </tr>
     </table>
 </div>
