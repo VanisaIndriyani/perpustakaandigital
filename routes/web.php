@@ -66,6 +66,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/mahasiswa', [\App\Http\Controllers\Admin\MahasiswaController::class, 'index'])->name('mahasiswa.index');
             Route::get('/mahasiswa/export/pdf', [\App\Http\Controllers\Admin\MahasiswaController::class, 'exportPdf'])->name('mahasiswa.export.pdf');
 
+            Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
+            Route::get('/user/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('user.create');
+            Route::post('/user', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('user.store');
+            Route::get('/user/{user}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user.edit');
+            Route::put('/user/{user}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('user.update');
+            Route::delete('/user/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('user.destroy');
+
             Route::get('/turnitin', [\App\Http\Controllers\Admin\TurnitinController::class, 'index'])->name('turnitin.index');
             Route::get('/turnitin/export/pdf', [\App\Http\Controllers\Admin\TurnitinController::class, 'exportPdf'])->name('turnitin.export.pdf');
             Route::put('/turnitin/{turnitinSubmission}', [\App\Http\Controllers\Admin\TurnitinController::class, 'update'])->name('turnitin.update');

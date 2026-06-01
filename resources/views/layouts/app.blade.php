@@ -131,18 +131,97 @@
 </footer>
 @endunless
 @stack('scripts')
-<script>
-    document.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-mobile-toggle]');
-        if (!button) return;
+    <script>
+        document.addEventListener('click', (event) => {
+            const button = event.target.closest('[data-mobile-toggle]');
+            if (!button) return;
 
-        const targetId = button.getAttribute('data-mobile-toggle');
-        const target = targetId ? document.getElementById(targetId) : null;
-        if (!target) return;
+            const targetId = button.getAttribute('data-mobile-toggle');
+            const target = targetId ? document.getElementById(targetId) : null;
+            if (!target) return;
 
-        const isHidden = target.classList.contains('hidden');
-        target.classList.toggle('hidden', !isHidden);
-    });
-</script>
+            const isHidden = target.classList.contains('hidden');
+            target.classList.toggle('hidden', !isHidden);
+        });
+
+        /**
+         * Global Carousel Initializer
+         */
+        window.initCarousel = (container, selectors = {}) => {
+            const scroller = container.querySelector(selectors.scroller || '[data-carousel-scroller]');
+            const dotsContainer = container.querySelector(selectors.dots || '[data-carousel-dots]');
+            const prevButtons = Array.from(selectors.externalPrev || []).concat(Array.from(container.querySelectorAll(selectors.prev || '[data-carousel-prev]')));
+            const nextButtons = Array.from(selectors.externalNext || []).concat(Array.from(container.querySelectorAll(selectors.next || '[data-carousel-next]')));
+
+            if (!scroller || !dotsContainer) return null;
+
+            const getStep = () => Math.max(1, scroller.clientWidth);
+            const getPageCount = () => Math.max(1, Math.round(scroller.scrollWidth / getStep()));
+            const getIndex = () => Math.round(scroller.scrollLeft / getStep());
+
+            const updateDots = () => {
+                const index = getIndex();
+                dotsContainer.querySelectorAll('button[data-dot]').forEach((dot) => {
+                    const isActiveDot = Number(dot.getAttribute('data-dot')) === index;
+                    dot.classList.toggle('bg-emerald-600', isActiveDot);
+                    dot.classList.toggle('bg-slate-300', !isActiveDot);
+                    dot.classList.toggle('w-6', isActiveDot);
+                    dot.classList.toggle('w-2.5', !isActiveDot);
+                });
+            };
+
+            const renderDots = () => {
+                const count = getPageCount();
+                dotsContainer.innerHTML = '';
+                if (count <= 1) return;
+
+                for (let i = 0; i < count; i++) {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.setAttribute('data-dot', String(i));
+                    dot.className = 'h-2.5 w-2.5 rounded-full bg-slate-300 transition';
+                    dot.addEventListener('click', () => {
+                        scroller.scrollTo({ left: i * getStep(), behavior: 'smooth' });
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+                updateDots();
+            };
+
+            const onScroll = () => window.requestAnimationFrame(updateDots);
+            scroller.addEventListener('scroll', onScroll, { passive: true });
+
+            const onPrev = () => scroller.scrollBy({ left: -getStep(), behavior: 'smooth' });
+            const onNext = () => scroller.scrollBy({ left: getStep(), behavior: 'smooth' });
+
+            prevButtons.forEach(btn => btn.addEventListener('click', onPrev));
+            nextButtons.forEach(btn => btn.addEventListener('click', onNext));
+
+            let resizeTimer;
+            const onResize = () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(renderDots, 150);
+            };
+            window.addEventListener('resize', onResize, { passive: true });
+
+            renderDots();
+
+            return {
+                destroy: () => {
+                    scroller.removeEventListener('scroll', onScroll);
+                    prevButtons.forEach(btn => btn.removeEventListener('click', onPrev));
+                    nextButtons.forEach(btn => btn.removeEventListener('click', onNext));
+                    window.removeEventListener('resize', onResize);
+                },
+                renderDots,
+                scroller
+            };
+        };
+
+        // Auto-init carousels with [data-generic-carousel]
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('[data-generic-carousel]').forEach(el => window.initCarousel(el));
+        });
+    </script>
 </body>
 </html>

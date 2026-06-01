@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="space-y-6">
-        <section class="rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8">
+        <section class="rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8" data-generic-carousel>
             <div class="flex items-start justify-between gap-4">
                 <div class="flex items-start gap-4">
                     <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/60">
@@ -17,12 +17,12 @@
                 </div>
 
                 <div class="hidden items-center gap-2 sm:flex">
-                    <button type="button" data-rek-prev class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <button type="button" data-carousel-prev class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
                         <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <button type="button" data-rek-next class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <button type="button" data-carousel-next class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
                         <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="mt-6">
-                <div id="rekomendasiCarousel" class="overflow-x-auto scroll-smooth snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div data-carousel-scroller class="overflow-x-auto scroll-smooth snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     <div class="flex gap-4 pr-2">
                         @forelse(($rekomendasi ?? collect()) as $koleksi)
                             <div class="w-full shrink-0 snap-start sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]">
@@ -87,15 +87,15 @@
                     </div>
                 </div>
 
-                <div class="mt-5 flex items-center justify-center gap-2" id="rekomendasiDots"></div>
+                <div class="mt-5 flex items-center justify-center gap-2" data-carousel-dots></div>
 
                 <div class="mt-4 flex items-center justify-center gap-2 sm:hidden">
-                    <button type="button" data-rek-prev class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <button type="button" data-carousel-prev class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
                         <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                             <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <button type="button" data-rek-next class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <button type="button" data-carousel-next class="grid h-10 w-10 place-items-center rounded-full border border-emerald-200 bg-white text-emerald-700 shadow-soft transition hover:bg-emerald-50">
                         <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
                             <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
