@@ -18,8 +18,8 @@
                    Repository IAI DDI Sidenreng Rappang
                 </div>
                 <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">
-                    Repository IAI DDI Sidenreng Rappang
-                    <span class="block text-white/90">modern dan profesional</span>
+                    Repository IAI DDI Sidenreng Rappang Modern dan Profesional
+                    <!-- <span class="block text-white/90">modern dan profesional</span> -->
                 </h1>
                 <p class="max-w-prose text-white/90">
                    Welcome to Repository IAI DDI Sidenreng Rappang, Jelajahi Jurnal, E-Jurnal, Buku, E-Book, Skripsi dan Laporan PPL dengan tampilan yang modern dan profesional
