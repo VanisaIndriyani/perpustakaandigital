@@ -6,9 +6,7 @@
             <div class="absolute -left-24 -top-24 h-64 w-64 rounded-full bg-white/30 blur-3xl"></div>
             <div class="absolute -right-24 -bottom-24 h-64 w-64 rounded-full bg-white/20 blur-3xl"></div>
         </div>
-        <div class="absolute -right-12 -top-8 hidden h-44 w-44 rotate-6 opacity-15 md:block">
-            <img src="{{ asset('logo.jpeg') }}" alt="Logo" class="h-full w-full object-contain">
-        </div>
+      
         <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
             <div class="space-y-4">
                 <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wide text-white/90 ring-1 ring-white/20">
