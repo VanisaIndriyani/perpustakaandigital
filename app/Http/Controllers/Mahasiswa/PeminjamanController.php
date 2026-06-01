@@ -70,7 +70,9 @@ class PeminjamanController extends Controller
     public function buktiPdf(Peminjaman $peminjaman)
     {
         if (!class_exists(Pdf::class)) {
-            abort(500, 'Library PDF belum terpasang di server. Jalankan: composer install (atau composer require barryvdh/laravel-dompdf) lalu php artisan optimize:clear.');
+            return redirect()
+                ->route('mahasiswa.peminjaman.index')
+                ->with('status', 'Bukti PDF belum bisa dipakai di hosting karena library PDF belum terpasang. Jalankan: composer install lalu php artisan optimize:clear.');
         }
 
         if ((int) $peminjaman->user_id !== (int) Auth::id()) {

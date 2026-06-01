@@ -45,11 +45,13 @@ class MahasiswaController extends Controller
 
     public function exportPdf(Request $request)
     {
-        if (!class_exists(Pdf::class)) {
-            abort(500, 'Library PDF belum terpasang di server. Jalankan: composer install (atau composer require barryvdh/laravel-dompdf) lalu php artisan optimize:clear.');
-        }
-
         $q = trim((string) $request->query('q', ''));
+
+        if (!class_exists(Pdf::class)) {
+            return redirect()
+                ->route('admin.mahasiswa.index', ['q' => $q])
+                ->with('status', 'Export PDF belum bisa dipakai di hosting karena library PDF belum terpasang. Jalankan: composer install lalu php artisan optimize:clear.');
+        }
 
         $query = User::query()
             ->where('role', 'mahasiswa')
