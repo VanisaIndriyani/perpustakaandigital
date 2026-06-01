@@ -165,7 +165,7 @@
                     const isActiveDot = Number(dot.getAttribute('data-dot')) === index;
                     dot.classList.toggle('bg-emerald-600', isActiveDot);
                     dot.classList.toggle('bg-slate-300', !isActiveDot);
-                    dot.classList.toggle('w-6', isActiveDot);
+                    dot.classList.toggle('w-8', isActiveDot); // Lebih panjang agar jadi garis
                     dot.classList.toggle('w-2.5', !isActiveDot);
                 });
             };
@@ -173,13 +173,14 @@
             const renderDots = () => {
                 const count = getPageCount();
                 dotsContainer.innerHTML = '';
-                if (count <= 1) return;
+                // Selalu munculkan titik jika ada item, minimal 1 titik (garis)
+                if (count < 1) return; 
 
                 for (let i = 0; i < count; i++) {
                     const dot = document.createElement('button');
                     dot.type = 'button';
                     dot.setAttribute('data-dot', String(i));
-                    dot.className = 'h-2.5 w-2.5 rounded-full bg-slate-300 transition';
+                    dot.className = 'h-2 w-2.5 rounded-full bg-slate-300 transition-all duration-300';
                     dot.addEventListener('click', () => {
                         scroller.scrollTo({ left: i * getStep(), behavior: 'smooth' });
                     });
