@@ -48,13 +48,14 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
-        if (User::query()->where('email', 'test@example.com')->doesntExist()) {
-            User::factory()->create([
+        User::query()->updateOrCreate(
+            ['email' => 'test@example.com'],
+            [
                 'name' => 'Test User',
-                'email' => 'test@example.com',
+                'password' => Hash::make('Test12345!'),
                 'role' => 'mahasiswa',
-            ]);
-        }
+            ],
+        );
 
         $kategoriNames = [
             'Teknik Informatika',
@@ -68,20 +69,22 @@ class DatabaseSeeder extends Seeder
             ->map(fn (string $name) => Kategori::query()->firstOrCreate(['nama_kategori' => $name])->id)
             ->values();
 
-        $faker = \Faker\Factory::create('id_ID');
-        $jenisKeys = array_keys(Koleksi::jenisOptions());
+        if (class_exists(\Faker\Factory::class)) {
+            $faker = \Faker\Factory::create('id_ID');
+            $jenisKeys = array_keys(Koleksi::jenisOptions());
 
-        for ($i = 1; $i <= 5; $i++) {
-            Koleksi::query()->create([
-                'judul' => 'Contoh Koleksi ' . $i . ' - ' . $faker->sentence(4),
-                'pengarang' => $faker->name(),
-                'tahun' => (int) $faker->numberBetween(2016, (int) now()->format('Y')),
-                'kategori_id' => $faker->randomElement($kategoriIds),
-                'jenis' => $faker->randomElement($jenisKeys),
-                'deskripsi' => $faker->paragraphs(2, true),
-                'cover' => null,
-                'file_pdf' => null,
-            ]);
+            for ($i = 1; $i <= 5; $i++) {
+                Koleksi::query()->create([
+                    'judul' => 'Contoh Koleksi ' . $i . ' - ' . $faker->sentence(4),
+                    'pengarang' => $faker->name(),
+                    'tahun' => (int) $faker->numberBetween(2016, (int) now()->format('Y')),
+                    'kategori_id' => $faker->randomElement($kategoriIds),
+                    'jenis' => $faker->randomElement($jenisKeys),
+                    'deskripsi' => $faker->paragraphs(2, true),
+                    'cover' => null,
+                    'file_pdf' => null,
+                ]);
+            }
         }
     }
 }
