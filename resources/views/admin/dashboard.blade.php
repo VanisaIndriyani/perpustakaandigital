@@ -52,7 +52,9 @@
             <div class="mt-1 text-sm text-slate-600">Masuk ke menu Koleksi atau Kategori untuk CRUD dan upload file.</div>
             <div class="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
                 <a href="{{ route('admin.koleksi.create') }}" class="rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">Tambah Koleksi</a>
-                <a href="{{ route('admin.kategori.create') }}" class="rounded-2xl border border-emerald-200 bg-white px-4 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Tambah Kategori</a>
+                @if(auth()->user()?->role === 'admin')
+                    <a href="{{ route('admin.kategori.create') }}" class="rounded-2xl border border-emerald-200 bg-white px-4 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Tambah Kategori</a>
+                @endif
                 <a href="{{ route('admin.profile.edit') }}" class="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Edit Profil</a>
             </div>
         </div>
@@ -66,7 +68,9 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 <a href="{{ route('admin.koleksi.index') }}" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Daftar Koleksi</a>
-                <a href="{{ route('admin.kategori.index') }}" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Daftar Kategori</a>
+                @if(auth()->user()?->role === 'admin')
+                    <a href="{{ route('admin.kategori.index') }}" class="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Daftar Kategori</a>
+                @endif
             </div>
         </div>
     </div>

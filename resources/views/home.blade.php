@@ -15,14 +15,14 @@
                     <span class="grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-white/80">
                         <img src="{{ asset('logo.jpeg') }}" alt="Logo" class="h-5 w-5 object-contain p-0.5">
                     </span>
-                    Repository Digital Kampus
+                   Repository IAI DDI Sidenreng Rappang
                 </div>
                 <h1 class="text-3xl font-semibold leading-tight sm:text-4xl">
-                    Perpustakaan Digital
-                    <span class="block text-white/90">modern, clean, dan profesional</span>
+                    Repository IAI DDI Sidenreng Rappang
+                    <span class="block text-white/90">modern dan profesional</span>
                 </h1>
                 <p class="max-w-prose text-white/90">
-                    Jelajahi jurnal, e-jurnal, buku, e-book, dan skripsi dengan tampilan elegan seperti portal repository kampus.
+                   Welcome to Repository IAI DDI Sidenreng Rappang, Jelajahi Jurnal, E-Jurnal, Buku, E-Book, Skripsi dan Laporan PPL dengan tampilan yang modern dan profesional
                 </p>
                 <div class="flex flex-wrap gap-2">
                     <a href="{{ route('koleksi.jurnal') }}" class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Lihat Jurnal Kampus</a>

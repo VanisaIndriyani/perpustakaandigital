@@ -36,21 +36,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/login', [\App\Http\Controllers\Mahasiswa\AuthController::class, 'login'])->name('login.store');
     });
 
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['auth', 'admin_or_staff'])->group(function () {
         Route::get('/', \App\Http\Controllers\Admin\DashboardController::class)->name('dashboard');
         Route::post('/logout', [\App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
 
         Route::get('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
-
-        Route::get('/kategori', [\App\Http\Controllers\Admin\KategoriController::class, 'index'])->name('kategori.index');
-        Route::get('/kategori/create', [\App\Http\Controllers\Admin\KategoriController::class, 'create'])->name('kategori.create');
-        Route::post('/kategori', [\App\Http\Controllers\Admin\KategoriController::class, 'store'])->name('kategori.store');
-        Route::get('/kategori/{kategori}/edit', [\App\Http\Controllers\Admin\KategoriController::class, 'edit'])->name('kategori.edit');
-        Route::put('/kategori/{kategori}', [\App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('kategori.update');
-        Route::delete('/kategori/{kategori}', [\App\Http\Controllers\Admin\KategoriController::class, 'destroy'])->name('kategori.destroy');
-
-        Route::get('/mahasiswa', [\App\Http\Controllers\Admin\MahasiswaController::class, 'index'])->name('mahasiswa.index');
 
         Route::get('/koleksi', [\App\Http\Controllers\Admin\KoleksiController::class, 'index'])->name('koleksi.index');
         Route::get('/koleksi/create', [\App\Http\Controllers\Admin\KoleksiController::class, 'create'])->name('koleksi.create');
@@ -64,8 +55,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/peminjaman/{peminjaman}/bukti/pdf', [\App\Http\Controllers\Admin\PeminjamanController::class, 'buktiPdf'])->name('peminjaman.bukti.pdf');
         Route::put('/peminjaman/{peminjaman}', [\App\Http\Controllers\Admin\PeminjamanController::class, 'update'])->name('peminjaman.update');
 
-        Route::get('/turnitin', [\App\Http\Controllers\Admin\TurnitinController::class, 'index'])->name('turnitin.index');
-        Route::get('/turnitin/export/pdf', [\App\Http\Controllers\Admin\TurnitinController::class, 'exportPdf'])->name('turnitin.export.pdf');
-        Route::put('/turnitin/{turnitinSubmission}', [\App\Http\Controllers\Admin\TurnitinController::class, 'update'])->name('turnitin.update');
+        Route::middleware('admin')->group(function () {
+            Route::get('/kategori', [\App\Http\Controllers\Admin\KategoriController::class, 'index'])->name('kategori.index');
+            Route::get('/kategori/create', [\App\Http\Controllers\Admin\KategoriController::class, 'create'])->name('kategori.create');
+            Route::post('/kategori', [\App\Http\Controllers\Admin\KategoriController::class, 'store'])->name('kategori.store');
+            Route::get('/kategori/{kategori}/edit', [\App\Http\Controllers\Admin\KategoriController::class, 'edit'])->name('kategori.edit');
+            Route::put('/kategori/{kategori}', [\App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('kategori.update');
+            Route::delete('/kategori/{kategori}', [\App\Http\Controllers\Admin\KategoriController::class, 'destroy'])->name('kategori.destroy');
+
+            Route::get('/mahasiswa', [\App\Http\Controllers\Admin\MahasiswaController::class, 'index'])->name('mahasiswa.index');
+            Route::get('/mahasiswa/export/pdf', [\App\Http\Controllers\Admin\MahasiswaController::class, 'exportPdf'])->name('mahasiswa.export.pdf');
+
+            Route::get('/turnitin', [\App\Http\Controllers\Admin\TurnitinController::class, 'index'])->name('turnitin.index');
+            Route::get('/turnitin/export/pdf', [\App\Http\Controllers\Admin\TurnitinController::class, 'exportPdf'])->name('turnitin.export.pdf');
+            Route::put('/turnitin/{turnitinSubmission}', [\App\Http\Controllers\Admin\TurnitinController::class, 'update'])->name('turnitin.update');
+        });
     });
 });

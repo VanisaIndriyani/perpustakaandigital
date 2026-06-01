@@ -29,7 +29,7 @@
                 </span>
                 <div class="leading-tight">
                     <div class="text-sm font-semibold text-slate-900">{{ config('app.name') }}</div>
-                    <div class="text-xs text-slate-500">Repository Digital Kampus</div>
+                    <div class="text-xs text-slate-500">Repository IAI DDI Sidenreng Rappang</div>
                 </div>
             </a>
 
@@ -126,7 +126,7 @@
 @unless($isAdminArea)
 <footer class="fixed bottom-0 left-0 right-0 z-40 border-t border-emerald-100/70 bg-white/90 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-6 text-sm text-slate-500 sm:px-6 lg:px-8">
-        © 2026 Perpustakaan Digital. All rights reserved.
+        © 2026 Repository IAI DDI Sidenreng Rappang. All rights reserved.
     </div>
 </footer>
 @endunless

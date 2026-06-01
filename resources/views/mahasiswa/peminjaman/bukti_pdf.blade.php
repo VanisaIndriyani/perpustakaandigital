@@ -118,7 +118,7 @@
 <div class="footer">
     <table class="footer-table">
         <tr>
-            <td>© 2026 Perpustakaan Digital</td>
+            <td>© 2026 Repository IAI DDI Sidenreng Rappang</td>
             <td>
                 <script type="text/php">
                     if (isset($pdf)) {

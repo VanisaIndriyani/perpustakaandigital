@@ -8,6 +8,14 @@
                 <div class="text-2xl font-semibold text-slate-900">Data Mahasiswa</div>
                 <div class="mt-2 text-sm text-slate-600">Daftar akun mahasiswa yang terdaftar dan aktivitas login terakhir.</div>
             </div>
+            <a href="{{ route('admin.mahasiswa.export.pdf', ['q' => $q]) }}" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    <path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                Export PDF
+            </a>
         </div>
 
         <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

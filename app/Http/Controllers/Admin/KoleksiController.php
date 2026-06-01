@@ -17,8 +17,14 @@ class KoleksiController extends Controller
         $jenis = (string) $request->query('jenis', '');
         $kategoriId = (string) $request->query('kategori_id', '');
 
+        $allowedJenisKeys = $this->allowedJenisKeys($request);
+        $jenisOptions = collect(Koleksi::jenisOptions())
+            ->only($allowedJenisKeys)
+            ->all();
+
         $koleksis = Koleksi::query()
             ->with('kategori')
+            ->whereIn('jenis', $allowedJenisKeys)
             ->when($q !== '', function ($query) use ($q) {
                 $query->where(function ($inner) use ($q) {
                     $inner
@@ -39,7 +45,7 @@ class KoleksiController extends Controller
             'q' => $q,
             'jenis' => $jenis,
             'kategoriId' => $kategoriId,
-            'jenisOptions' => Koleksi::jenisOptions(),
+            'jenisOptions' => $jenisOptions,
             'kategoris' => $kategoris,
             'koleksis' => $koleksis,
         ]);
@@ -47,15 +53,20 @@ class KoleksiController extends Controller
 
     public function create()
     {
+        $allowedJenisKeys = $this->allowedJenisKeys(request());
+        $jenisOptions = collect(Koleksi::jenisOptions())
+            ->only($allowedJenisKeys)
+            ->all();
+
         return view('admin.koleksi.create', [
-            'jenisOptions' => Koleksi::jenisOptions(),
+            'jenisOptions' => $jenisOptions,
             'kategoris' => Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']),
         ]);
     }
 
     public function store(Request $request)
     {
-        $validated = $this->validatePayload($request);
+        $validated = $this->validatePayload($request, $this->allowedJenisKeys($request));
 
         if ($request->hasFile('cover')) {
             $validated['cover'] = $request->file('cover')->store('covers', 'public');
@@ -72,16 +83,28 @@ class KoleksiController extends Controller
 
     public function edit(Koleksi $koleksi)
     {
+        $allowedJenisKeys = $this->allowedJenisKeys(request());
+
+        if ($this->isStaff(request()) && !in_array($koleksi->jenis, $allowedJenisKeys, true)) {
+            abort(403);
+        }
+
         return view('admin.koleksi.edit', [
             'koleksi' => $koleksi,
-            'jenisOptions' => Koleksi::jenisOptions(),
+            'jenisOptions' => collect(Koleksi::jenisOptions())->only($allowedJenisKeys)->all(),
             'kategoris' => Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']),
         ]);
     }
 
     public function update(Request $request, Koleksi $koleksi)
     {
-        $validated = $this->validatePayload($request);
+        $allowedJenisKeys = $this->allowedJenisKeys($request);
+
+        if ($this->isStaff($request) && !in_array($koleksi->jenis, $allowedJenisKeys, true)) {
+            abort(403);
+        }
+
+        $validated = $this->validatePayload($request, $allowedJenisKeys);
 
         $removeCover = (bool) $request->boolean('remove_cover');
         $removePdf = (bool) $request->boolean('remove_file_pdf');
@@ -115,6 +138,10 @@ class KoleksiController extends Controller
 
     public function destroy(Koleksi $koleksi)
     {
+        if ($this->isStaff(request())) {
+            abort(403);
+        }
+
         if ($koleksi->cover) {
             Storage::disk('public')->delete($koleksi->cover);
         }
@@ -128,10 +155,8 @@ class KoleksiController extends Controller
         return redirect()->route('admin.koleksi.index');
     }
 
-    private function validatePayload(Request $request): array
+    private function validatePayload(Request $request, array $jenisKeys): array
     {
-        $jenisKeys = array_keys(Koleksi::jenisOptions());
-
         return $request->validate([
             'judul' => ['required', 'string', 'max:180'],
             'pengarang' => ['required', 'string', 'max:120'],
@@ -144,5 +169,19 @@ class KoleksiController extends Controller
             'remove_cover' => ['nullable', 'boolean'],
             'remove_file_pdf' => ['nullable', 'boolean'],
         ]);
+    }
+
+    private function isStaff(Request $request): bool
+    {
+        return $request->user()?->role === 'staf';
+    }
+
+    private function allowedJenisKeys(Request $request): array
+    {
+        if ($this->isStaff($request)) {
+            return ['buku', 'e-book'];
+        }
+
+        return array_keys(Koleksi::jenisOptions());
     }
 }

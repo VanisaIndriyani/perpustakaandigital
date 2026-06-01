@@ -13,7 +13,7 @@
                     </span>
                     <div class="leading-tight">
                         <div class="text-sm font-semibold">{{ config('app.name') }}</div>
-                        <div class="text-xs text-white/80">Repository Digital Kampus</div>
+                        <div class="text-xs text-white/80">Repository IAI DDI Sidenreng Rappang</div>
                     </div>
                 </a>
 

@@ -78,11 +78,13 @@
                             <td class="px-4 py-3">
                                 <div class="flex justify-end gap-2">
                                     <a href="{{ route('admin.koleksi.edit', $koleksi) }}" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Edit</a>
-                                    <form method="POST" action="{{ route('admin.koleksi.destroy', $koleksi) }}" onsubmit="return confirm('Hapus koleksi ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="rounded-xl border border-rose-200 bg-white px-3 py-2 text-sm font-semibold text-rose-700 shadow-soft transition hover:bg-rose-50">Hapus</button>
-                                    </form>
+                                    @if(auth()->user()?->role === 'admin')
+                                        <form method="POST" action="{{ route('admin.koleksi.destroy', $koleksi) }}" onsubmit="return confirm('Hapus koleksi ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="rounded-xl border border-rose-200 bg-white px-3 py-2 text-sm font-semibold text-rose-700 shadow-soft transition hover:bg-rose-50">Hapus</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
@@ -101,4 +103,3 @@
         </div>
     </div>
 @endsection
-

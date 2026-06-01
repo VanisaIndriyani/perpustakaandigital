@@ -292,7 +292,7 @@
 <div class="footer">
     <table class="footer-table">
         <tr>
-            <td>© {{ $generatedAt->format('Y') }} Perpustakaan Digital</td>
+            <td>© {{ $generatedAt->format('Y') }} Repository IAI DDI Sidenreng Rappang</td>
             <td>
                 <script type="text/php">
                     if (isset($pdf)) {

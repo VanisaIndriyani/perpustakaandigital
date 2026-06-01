@@ -14,7 +14,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return Auth::user()->role === 'admin'
+            return in_array(Auth::user()->role, ['admin', 'staf'], true)
                 ? redirect()->route('admin.dashboard')
                 : redirect()->route('mahasiswa.dashboard');
         }
@@ -35,7 +35,7 @@ class AuthController extends Controller
             $request->user()?->forceFill(['last_login_at' => now()])->save();
 
             $userRole = $request->user()?->role;
-            $default = $userRole === 'admin'
+            $default = in_array($userRole, ['admin', 'staf'], true)
                 ? route('admin.dashboard')
                 : route('mahasiswa.dashboard');
 
@@ -43,11 +43,11 @@ class AuthController extends Controller
             $intendedPath = is_string($intended) ? (parse_url($intended, PHP_URL_PATH) ?: null) : null;
             $intendedIsAdmin = is_string($intendedPath) && str_starts_with($intendedPath, '/admin');
 
-            if ($userRole === 'admin' && !$intendedIsAdmin) {
+            if (in_array($userRole, ['admin', 'staf'], true) && !$intendedIsAdmin) {
                 $request->session()->forget('url.intended');
             }
 
-            if ($userRole !== 'admin' && $intendedIsAdmin) {
+            if (!in_array($userRole, ['admin', 'staf'], true) && $intendedIsAdmin) {
                 $request->session()->forget('url.intended');
             }
 
@@ -64,7 +64,7 @@ class AuthController extends Controller
     public function showRegister()
     {
         if (Auth::check()) {
-            return Auth::user()->role === 'admin'
+            return in_array(Auth::user()->role, ['admin', 'staf'], true)
                 ? redirect()->route('admin.dashboard')
                 : redirect()->route('mahasiswa.dashboard');
         }

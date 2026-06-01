@@ -39,6 +39,15 @@ class DatabaseSeeder extends Seeder
             ],
         );
 
+        User::query()->updateOrCreate(
+            ['email' => 'staf@perpustakaan.test'],
+            [
+                'name' => 'Staf Perpustakaan',
+                'password' => Hash::make('Staf12345!'),
+                'role' => 'staf',
+            ],
+        );
+
         if (User::query()->where('email', 'test@example.com')->doesntExist()) {
             User::factory()->create([
                 'name' => 'Test User',

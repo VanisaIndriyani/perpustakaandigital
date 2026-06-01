@@ -82,6 +82,10 @@ class TurnitinController extends Controller
 
     public function exportPdf(Request $request)
     {
+        if (!class_exists(Pdf::class)) {
+            abort(500, 'Library PDF belum terpasang di server. Jalankan: composer install (atau composer require barryvdh/laravel-dompdf) lalu php artisan optimize:clear.');
+        }
+
         $status = (string) $request->query('status', '');
         $q = trim((string) $request->query('q', ''));
 
