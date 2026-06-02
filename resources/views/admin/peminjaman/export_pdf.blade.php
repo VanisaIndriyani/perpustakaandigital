@@ -26,8 +26,8 @@
             vertical-align: middle;
         }
         .logo {
-            width: 86px;
-            height: 86px;
+            width: 100px;
+            height: 100px;
             overflow: hidden;
         }
         .logo img {
@@ -38,25 +38,26 @@
         .kop {
             text-align: center;
             line-height: 1.15;
+            padding-right: 40px;
         }
         .kop-1 {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 800;
             letter-spacing: .04em;
         }
         .kop-2 {
-            font-size: 16px;
+            font-size: 19px;
             font-weight: 900;
             letter-spacing: .04em;
         }
         .kop-3 {
-            margin-top: 3px;
-            font-size: 11px;
+            margin-top: 4px;
+            font-size: 13px;
             font-weight: 800;
         }
         .kop-4 {
-            margin-top: 3px;
-            font-size: 9px;
+            margin-top: 4px;
+            font-size: 10px;
             color: #334155;
         }
         .rule {

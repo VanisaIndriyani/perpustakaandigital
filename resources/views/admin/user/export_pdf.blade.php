@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
-    <title>Export Mahasiswa</title>
+    <title>Export User</title>
     <style>
         @page { margin: 210px 34px 70px 34px; }
         body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 11px; color: #0f172a; }
@@ -27,9 +27,9 @@
         .muted { color: #64748b; font-size: 9px; }
         .wrap { overflow-wrap: break-word; word-wrap: break-word; }
         .badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 9px; font-weight: 800; border: 1px solid #e2e8f0; background: #fff; color: #0f172a; }
-        .badge-active { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
-        .badge-never { background: #fffbeb; border-color: #fde68a; color: #92400e; }
-        .badge-ever { background: #f1f5f9; border-color: #e2e8f0; color: #334155; }
+        .badge-admin { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+        .badge-staff { background: #f0f9ff; border-color: #bae6fd; color: #075985; }
+        .badge-mahasiswa { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
         .zebra tbody tr:nth-child(even) td { background: #fafafa; }
         .footer { position: fixed; bottom: -50px; left: 0; right: 0; height: 50px; border-top: 1px solid #e2e8f0; padding-top: 10px; color: #64748b; font-size: 10px; }
         .footer-table { width: 100%; }
@@ -62,10 +62,9 @@
         <div class="rule-1"></div>
         <div class="rule-2"></div>
     </div>
-    <div class="doc-title">REKAP DATA MAHASISWA</div>
+    <div class="doc-title">REKAP DATA USER</div>
     <div class="filters">
-        Filter: Pencarian: {{ $q !== '' ? $q : '—' }}<br>
-        Ringkasan: Total {{ $summary['total'] ?? 0 }} | Pernah login {{ $summary['logged_in'] ?? 0 }} | Belum login {{ $summary['never_login'] ?? 0 }} | Aktif 7 hari {{ $summary['active_7d'] ?? 0 }}<br>
+        Filter: Pencarian: {{ $q !== '' ? $q : '—' }} | Role: {{ $role !== '' ? ucfirst($role) : 'Semua Role' }}<br>
         Dicetak: {{ $generatedAt->format('d/m/Y H:i') }}&nbsp;WIB | Total data: {{ $items->count() }}
     </div>
 </div>
@@ -74,8 +73,8 @@
     <colgroup>
         <col style="width:4%">
         <col style="width:18%">
-        <col style="width:12%">
         <col style="width:20%">
+        <col style="width:12%">
         <col style="width:12%">
         <col style="width:12%">
         <col style="width:12%">
@@ -84,39 +83,45 @@
     <thead>
     <tr>
         <th>No</th>
-        <th>Mahasiswa</th>
-        <th>NIM</th>
+        <th>Nama</th>
         <th>Email</th>
-        <th>No HP</th>
+        <th>Password</th>
+        <th>Role</th>
+        <th>NIM / Phone</th>
+        <th>Login Terakhir</th>
         <th>Daftar</th>
-        <th>Login</th>
-        <th>Status</th>
     </tr>
     </thead>
     <tbody>
-    @foreach($items as $i => $mhs)
+    @foreach($items as $i => $user)
         @php
-            $never = is_null($mhs->last_login_at);
-            $recent = $mhs->last_login_at && $mhs->last_login_at->greaterThanOrEqualTo(now()->subDays(7));
-            $badgeClass = $never ? 'badge-never' : ($recent ? 'badge-active' : 'badge-ever');
-            $statusLabel = $never ? 'Belum Login' : ($recent ? 'Aktif' : 'Pernah Login');
+            $badgeClass = match($user->role) {
+                'admin' => 'badge-admin',
+                'staf' => 'badge-staff',
+                default => 'badge-mahasiswa',
+            };
         @endphp
         <tr>
             <td>{{ $i + 1 }}</td>
             <td class="wrap">
-                <div style="font-weight:800;">{{ $mhs->name }}</div>
+                <div style="font-weight:800;">{{ $user->name }}</div>
             </td>
-            <td class="wrap">{{ $mhs->nim ?: '—' }}</td>
-            <td class="wrap">{{ $mhs->email }}</td>
-            <td class="wrap">{{ $mhs->phone ?: '—' }}</td>
-            <td class="wrap">
-                {{ $mhs->created_at?->format('d/m/Y H:i') }}&nbsp;WIB
-            </td>
-            <td class="wrap">
-                {{ $mhs->last_login_at ? $mhs->last_login_at->format('d/m/Y H:i') . ' WIB' : '—' }}
+            <td class="wrap">{{ $user->email }}</td>
+            <td class="wrap" style="font-family: monospace; font-weight: bold; color: #b91c1c;">
+                {{ $user->password_plain ?: '—' }}
             </td>
             <td>
-                <span class="badge {{ $badgeClass }}">{{ $statusLabel }}</span>
+                <span class="badge {{ $badgeClass }}">{{ ucfirst($user->role) }}</span>
+            </td>
+            <td class="wrap">
+                <div class="muted">NIM: {{ $user->nim ?: '-' }}</div>
+                <div class="muted">Telp: {{ $user->phone ?: '-' }}</div>
+            </td>
+            <td class="wrap">
+                {{ $user->last_login_at ? $user->last_login_at->format('d/m/Y H:i') . ' WIB' : '—' }}
+            </td>
+            <td class="wrap">
+                {{ $user->created_at?->format('d/m/Y') }}
             </td>
         </tr>
     @endforeach

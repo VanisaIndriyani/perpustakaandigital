@@ -9,7 +9,25 @@
                 <div class="mt-2 text-sm text-slate-600">CRUD koleksi, cover, dan file PDF.</div>
             </div>
 
-            <a href="{{ route('admin.koleksi.create') }}" class="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">Tambah Koleksi</a>
+            <div class="flex flex-wrap gap-2">
+                <a href="{{ route('admin.koleksi.export.pdf', ['q' => $q, 'jenis' => $jenis, 'kategori_id' => $kategoriId]) }}" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                    Export PDF
+                </a>
+                <a href="{{ route('admin.koleksi.export.excel', ['q' => $q, 'jenis' => $jenis, 'kategori_id' => $kategoriId]) }}" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                    Export CSV
+                </a>
+                <a href="{{ route('admin.koleksi.create') }}" class="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">Tambah Koleksi</a>
+            </div>
         </div>
 
         <form class="mt-6 grid gap-3 md:grid-cols-4" method="GET" action="{{ route('admin.koleksi.index') }}">

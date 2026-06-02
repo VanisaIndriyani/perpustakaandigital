@@ -44,6 +44,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
 
         Route::get('/koleksi', [\App\Http\Controllers\Admin\KoleksiController::class, 'index'])->name('koleksi.index');
+        Route::get('/koleksi/export/pdf', [\App\Http\Controllers\Admin\KoleksiController::class, 'exportPdf'])->name('koleksi.export.pdf');
+        Route::get('/koleksi/export/excel', [\App\Http\Controllers\Admin\KoleksiController::class, 'exportExcel'])->name('koleksi.export.excel');
         Route::get('/koleksi/create', [\App\Http\Controllers\Admin\KoleksiController::class, 'create'])->name('koleksi.create');
         Route::post('/koleksi', [\App\Http\Controllers\Admin\KoleksiController::class, 'store'])->name('koleksi.store');
         Route::get('/koleksi/{koleksi}/edit', [\App\Http\Controllers\Admin\KoleksiController::class, 'edit'])->name('koleksi.edit');
@@ -67,6 +69,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/mahasiswa/export/pdf', [\App\Http\Controllers\Admin\MahasiswaController::class, 'exportPdf'])->name('mahasiswa.export.pdf');
 
             Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user.index');
+            Route::get('/user/export/pdf', [\App\Http\Controllers\Admin\UserController::class, 'exportPdf'])->name('user.export.pdf');
             Route::get('/user/create', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('user.create');
             Route::post('/user', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('user.store');
             Route::get('/user/{user}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user.edit');

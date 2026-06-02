@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -53,9 +54,15 @@ class UserController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
-
-        User::create($validated);
+        User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'password_plain' => $validated['password'], // Simpan password plain
+            'role' => $validated['role'],
+            'nim' => $validated['nim'],
+            'phone' => $validated['phone'],
+        ]);
 
         return redirect()
             ->route('admin.user.index')
@@ -79,6 +86,7 @@ class UserController extends Controller
         ]);
 
         if (!empty($validated['password'])) {
+            $validated['password_plain'] = $validated['password'];
             $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
@@ -102,5 +110,47 @@ class UserController extends Controller
         return redirect()
             ->route('admin.user.index')
             ->with('status', 'User berhasil dihapus.');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $q = trim((string) $request->query('q', ''));
+        $role = $request->query('role', '');
+
+        if (!class_exists(Pdf::class)) {
+            return redirect()
+                ->route('admin.user.index', ['q' => $q, 'role' => $role])
+                ->with('status', 'Export PDF belum bisa dipakai di hosting karena library PDF belum terpasang.');
+        }
+
+        $items = User::query()
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($inner) use ($q) {
+                    $inner->where('name', 'like', "%{$q}%")
+                        ->orWhere('email', 'like', "%{$q}%")
+                        ->orWhere('nim', 'like', "%{$q}%");
+                });
+            })
+            ->when($role !== '', function ($query) use ($role) {
+                $query->where('role', $role);
+            })
+            ->latest()
+            ->get();
+
+        $logoPath = public_path('logo.jpeg');
+        $logoDataUri = null;
+        if (is_file($logoPath)) {
+            $logoDataUri = 'data:image/jpeg;base64,' . base64_encode((string) file_get_contents($logoPath));
+        }
+
+        $pdf = Pdf::loadView('admin.user.export_pdf', [
+            'items' => $items,
+            'q' => $q,
+            'role' => $role,
+            'logoDataUri' => $logoDataUri,
+            'generatedAt' => now(),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('users-' . now()->format('Ymd-His') . '.pdf');
     }
 }

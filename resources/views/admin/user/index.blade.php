@@ -8,12 +8,22 @@
                 <div class="text-2xl font-semibold text-slate-900">Manajemen User</div>
                 <div class="mt-2 text-sm text-slate-600">Kelola semua akun pengguna (Admin, Staff, Mahasiswa).</div>
             </div>
-            <a href="{{ route('admin.user.create') }}" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">
-                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Tambah User
-            </a>
+            <div class="flex flex-wrap gap-2">
+                <a href="{{ route('admin.user.export.pdf', ['q' => $q, 'role' => $role]) }}" class="inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-200 bg-white px-5 py-3 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">
+                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                    Export PDF
+                </a>
+                <a href="{{ route('admin.user.create') }}" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">
+                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Tambah User
+                </a>
+            </div>
         </div>
 
         @if(session('status'))
@@ -48,6 +58,7 @@
                     <thead class="bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
                         <tr>
                             <th class="px-6 py-4">Nama & Email</th>
+                            <th class="px-6 py-4">Password</th>
                             <th class="px-6 py-4">Role</th>
                             <th class="px-6 py-4">NIM / Phone</th>
                             <th class="px-6 py-4">Login Terakhir</th>
@@ -60,6 +71,11 @@
                                 <td class="px-6 py-4">
                                     <div class="font-semibold text-slate-900">{{ $user->name }}</div>
                                     <div class="text-xs text-slate-500">{{ $user->email }}</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <code class="rounded bg-slate-100 px-2 py-1 text-xs font-bold text-rose-600">
+                                        {{ $user->password_plain ?: '—' }}
+                                    </code>
                                 </td>
                                 <td class="px-6 py-4">
                                     @php

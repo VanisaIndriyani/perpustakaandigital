@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use App\Models\Koleksi;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -134,6 +135,98 @@ class KoleksiController extends Controller
         $koleksi->update($validated);
 
         return redirect()->route('admin.koleksi.index');
+    }
+
+    public function exportPdf(Request $request)
+    {        $q = trim((string) $request->query('q', ''));
+        $jenis = (string) $request->query('jenis', '');
+        $kategoriId = (string) $request->query('kategori_id', '');
+
+        $allowedJenisKeys = $this->allowedJenisKeys($request);
+
+        $items = Koleksi::query()
+            ->with('kategori')
+            ->whereIn('jenis', $allowedJenisKeys)
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($inner) use ($q) {
+                    $inner
+                        ->where('judul', 'like', "%{$q}%")
+                        ->orWhere('pengarang', 'like', "%{$q}%")
+                        ->orWhere('tahun', 'like', "%{$q}%");
+                });
+            })
+            ->when($jenis !== '', fn ($query) => $query->where('jenis', $jenis))
+            ->when($kategoriId !== '', fn ($query) => $query->where('kategori_id', $kategoriId))
+            ->latest()
+            ->get();
+
+        $logoPath = public_path('logo.jpeg');
+        $logoDataUri = null;
+        if (is_file($logoPath)) {
+            $logoDataUri = 'data:image/jpeg;base64,' . base64_encode((string) file_get_contents($logoPath));
+        }
+
+        $pdf = Pdf::loadView('admin.koleksi.export_pdf', [
+            'items' => $items,
+            'q' => $q,
+            'jenis' => $jenis,
+            'logoDataUri' => $logoDataUri,
+            'generatedAt' => now(),
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download('koleksi-' . now()->format('Ymd-His') . '.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {        $q = trim((string) $request->query('q', ''));
+        $jenis = (string) $request->query('jenis', '');
+        $kategoriId = (string) $request->query('kategori_id', '');
+
+        $allowedJenisKeys = $this->allowedJenisKeys($request);
+
+        $items = Koleksi::query()
+            ->with('kategori')
+            ->whereIn('jenis', $allowedJenisKeys)
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($inner) use ($q) {
+                    $inner
+                        ->where('judul', 'like', "%{$q}%")
+                        ->orWhere('pengarang', 'like', "%{$q}%")
+                        ->orWhere('tahun', 'like', "%{$q}%");
+                });
+            })
+            ->when($jenis !== '', fn ($query) => $query->where('jenis', $jenis))
+            ->when($kategoriId !== '', fn ($query) => $query->where('kategori_id', $kategoriId))
+            ->latest()
+            ->get();
+
+        $jenisOptions = Koleksi::jenisOptions();
+
+        $callback = function () use ($items, $jenisOptions) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['No', 'Judul', 'Pengarang', 'Tahun', 'Jenis', 'Kategori', 'Tanggal Ditambahkan']);
+
+            foreach ($items as $index => $item) {
+                fputcsv($file, [
+                    $index + 1,
+                    $item->judul,
+                    $item->pengarang,
+                    $item->tahun ?: '-',
+                    $jenisOptions[$item->jenis] ?? $item->jenis,
+                    $item->kategori?->nama_kategori ?: '-',
+                    $item->created_at->format('d/m/Y H:i'),
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="koleksi-' . now()->format('Ymd-His') . '.csv"',
+        ];
+
+        return response()->stream($callback, 200, $headers);
     }
 
     public function destroy(Koleksi $koleksi)
