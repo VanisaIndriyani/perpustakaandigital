@@ -64,7 +64,7 @@ class UserController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'password_plain' => $request->password, // Pakai request langsung agar pasti terisi
+            'password_plain' => $validated['password'], // Pakai hasil validasi agar pasti terisi
             'role' => $validated['role'],
             'nim' => $validated['nim'],
             'phone' => $validated['phone'],
@@ -97,9 +97,9 @@ class UserController extends Controller
             $validated['kta_path'] = $request->file('kta')->store('kta', 'public');
         }
 
-        if (!empty($request->password)) {
-            $validated['password_plain'] = $request->password;
-            $validated['password'] = Hash::make($request->password);
+        if (!empty($validated['password'])) {
+            $validated['password_plain'] = $validated['password'];
+            $validated['password'] = Hash::make($validated['password']);
         } else {
             unset($validated['password']);
         }
