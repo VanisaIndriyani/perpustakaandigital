@@ -87,7 +87,7 @@
         <th>Email</th>
         <th>Password</th>
         <th>Role</th>
-        <th>NIM / Phone</th>
+        <th>NPM / NUPTK / Telp</th>
         <th>Login Terakhir</th>
         <th>Daftar</th>
     </tr>
@@ -98,6 +98,7 @@
             $badgeClass = match($user->role) {
                 'admin' => 'badge-admin',
                 'staf' => 'badge-staff',
+                'dosen' => 'badge-staff', // Dosen pakai style staff/sky
                 default => 'badge-mahasiswa',
             };
         @endphp
@@ -118,7 +119,13 @@
                 <span class="badge {{ $badgeClass }}">{{ ucfirst($user->role) }}</span>
             </td>
             <td class="wrap">
-                <div class="muted">NIM: {{ $user->nim ?: '-' }}</div>
+                @if($user->role === 'mahasiswa')
+                    <div class="muted">NPM: {{ $user->nim ?: '-' }}</div>
+                @elseif($user->role === 'dosen')
+                    <div class="muted">NUPTK: {{ $user->nim ?: '-' }}</div>
+                @else
+                    <div class="muted">ID: {{ $user->nim ?: '-' }}</div>
+                @endif
                 <div class="muted">Telp: {{ $user->phone ?: '-' }}</div>
             </td>
             <td class="wrap">

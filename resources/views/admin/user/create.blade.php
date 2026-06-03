@@ -33,13 +33,14 @@
                         <option value="admin" @selected(old('role') === 'admin')>Admin</option>
                         <option value="staf" @selected(old('role') === 'staf')>Staf</option>
                         <option value="mahasiswa" @selected(old('role') === 'mahasiswa')>Mahasiswa</option>
+                        <option value="dosen" @selected(old('role') === 'dosen')>Dosen</option>
                     </select>
                     @error('role') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="space-y-1">
-                    <label class="text-sm font-semibold text-slate-700" for="nim">NIM (Hanya untuk Mahasiswa)</label>
-                    <input id="nim" name="nim" value="{{ old('nim') }}" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4">
+                    <label class="text-sm font-semibold text-slate-700" for="nim" id="nim_label">NPM / NUPTK</label>
+                    <input id="nim" name="nim" value="{{ old('nim') }}" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4" placeholder="NPM untuk Mahasiswa / NUPTK untuk Dosen">
                     @error('nim') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
                 </div>
 

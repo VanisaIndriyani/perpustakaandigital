@@ -49,7 +49,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', Rule::in(['admin', 'staf', 'mahasiswa'])],
+            'role' => ['required', Rule::in(['admin', 'staf', 'mahasiswa', 'dosen'])],
             'nim' => ['nullable', 'string', 'max:50', 'unique:users,nim'],
             'phone' => ['nullable', 'string', 'max:20'],
             'kta' => ['nullable', 'image', 'max:2048'],
@@ -60,11 +60,11 @@ class UserController extends Controller
             $ktaPath = $request->file('kta')->store('kta', 'public');
         }
 
-        User::create([
+        $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'password_plain' => $validated['password'], // Simpan password plain
+            'password_plain' => $request->password, // Pakai request langsung agar pasti terisi
             'role' => $validated['role'],
             'nim' => $validated['nim'],
             'phone' => $validated['phone'],
@@ -87,7 +87,7 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
-            'role' => ['required', Rule::in(['admin', 'staf', 'mahasiswa'])],
+            'role' => ['required', Rule::in(['admin', 'staf', 'mahasiswa', 'dosen'])],
             'nim' => ['nullable', 'string', 'max:50', Rule::unique('users', 'nim')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:20'],
             'kta' => ['nullable', 'image', 'max:2048'],
@@ -97,9 +97,9 @@ class UserController extends Controller
             $validated['kta_path'] = $request->file('kta')->store('kta', 'public');
         }
 
-        if (!empty($validated['password'])) {
-            $validated['password_plain'] = $validated['password'];
-            $validated['password'] = Hash::make($validated['password']);
+        if (!empty($request->password)) {
+            $validated['password_plain'] = $request->password;
+            $validated['password'] = Hash::make($request->password);
         } else {
             unset($validated['password']);
         }

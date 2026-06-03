@@ -45,6 +45,7 @@
                 <option value="admin" {{ $role === 'admin' ? 'selected' : '' }}>Admin</option>
                 <option value="staf" {{ $role === 'staf' ? 'selected' : '' }}>Staf</option>
                 <option value="mahasiswa" {{ $role === 'mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                <option value="dosen" {{ $role === 'dosen' ? 'selected' : '' }}>Dosen</option>
             </select>
             <div class="flex flex-wrap gap-2">
                 <button class="flex-1 rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700" type="submit">Cari</button>
@@ -86,6 +87,7 @@
                                         $roleClass = match($user->role) {
                                             'admin' => 'bg-rose-50 text-rose-700 ring-rose-200/60',
                                             'staf' => 'bg-sky-50 text-sky-700 ring-sky-200/60',
+                                            'dosen' => 'bg-amber-50 text-amber-700 ring-amber-200/60',
                                             default => 'bg-emerald-50 text-emerald-700 ring-emerald-200/60',
                                         };
                                     @endphp
@@ -94,7 +96,13 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 text-slate-600">
-                                    <div class="text-xs">NIM: {{ $user->nim ?? '-' }}</div>
+                                    @if($user->role === 'mahasiswa')
+                                        <div class="text-xs">NPM: {{ $user->nim ?? '-' }}</div>
+                                    @elseif($user->role === 'dosen')
+                                        <div class="text-xs">NUPTK: {{ $user->nim ?? '-' }}</div>
+                                    @else
+                                        <div class="text-xs">NIM/ID: {{ $user->nim ?? '-' }}</div>
+                                    @endif
                                     <div class="text-xs">Telp: {{ $user->phone ?? '-' }}</div>
                                 </td>
                                 <td class="px-6 py-4 text-xs text-slate-500">
