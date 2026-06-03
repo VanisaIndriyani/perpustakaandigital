@@ -57,6 +57,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/peminjaman/export/pdf', [\App\Http\Controllers\Admin\PeminjamanController::class, 'exportPdf'])->name('peminjaman.export.pdf');
         Route::get('/peminjaman/{peminjaman}/bukti/pdf', [\App\Http\Controllers\Admin\PeminjamanController::class, 'buktiPdf'])->name('peminjaman.bukti.pdf');
         Route::put('/peminjaman/{peminjaman}', [\App\Http\Controllers\Admin\PeminjamanController::class, 'update'])->name('peminjaman.update');
+        Route::delete('/peminjaman/bulk-delete', [\App\Http\Controllers\Admin\PeminjamanController::class, 'bulkDelete'])->name('peminjaman.bulk-delete');
+        Route::delete('/peminjaman/{peminjaman}', [\App\Http\Controllers\Admin\PeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
 
         Route::middleware('admin')->group(function () {
             Route::get('/kategori', [\App\Http\Controllers\Admin\KategoriController::class, 'index'])->name('kategori.index');
@@ -80,6 +82,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/turnitin', [\App\Http\Controllers\Admin\TurnitinController::class, 'index'])->name('turnitin.index');
             Route::get('/turnitin/export/pdf', [\App\Http\Controllers\Admin\TurnitinController::class, 'exportPdf'])->name('turnitin.export.pdf');
             Route::put('/turnitin/{turnitinSubmission}', [\App\Http\Controllers\Admin\TurnitinController::class, 'update'])->name('turnitin.update');
+            Route::delete('/turnitin/bulk-delete', [\App\Http\Controllers\Admin\TurnitinController::class, 'bulkDelete'])->name('turnitin.bulk-delete');
+            Route::delete('/turnitin/{turnitinSubmission}', [\App\Http\Controllers\Admin\TurnitinController::class, 'destroy'])->name('turnitin.destroy');
         });
     });
 });

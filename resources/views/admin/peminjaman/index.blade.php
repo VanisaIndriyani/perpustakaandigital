@@ -85,10 +85,28 @@
             </div>
         </form>
 
-        <div class="mt-6 grid gap-3 lg:grid-cols-2">
-            @forelse($peminjamans as $item)
-                <div class="rounded-3xl border p-5 shadow-soft {{ $cardBg[$item->status] ?? 'border-slate-100 bg-white' }}">
-                    <div class="flex items-start justify-between gap-3">
+        <form id="bulkDeleteForm" action="{{ route('admin.peminjaman.bulk-delete') }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <label class="flex cursor-pointer items-center gap-2 text-sm font-semibold text-slate-700">
+                        <input type="checkbox" id="selectAll" class="h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                        Pilih Semua
+                    </label>
+                </div>
+                <button type="button" id="deleteSelectedBtn" class="hidden rounded-2xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white shadow-soft transition hover:bg-rose-700 disabled:opacity-50" onclick="confirmBulkDelete()">
+                    Hapus Terpilih (<span id="selectedCount">0</span>)
+                </button>
+            </div>
+
+            <div class="mt-4 grid gap-3 lg:grid-cols-2">
+                @forelse($peminjamans as $item)
+                    <div class="relative rounded-3xl border p-5 shadow-soft {{ $cardBg[$item->status] ?? 'border-slate-100 bg-white' }}">
+                        <div class="absolute right-5 top-5 z-10">
+                            <input type="checkbox" name="ids[]" value="{{ $item->id }}" class="item-checkbox h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+                        </div>
+                        <div class="flex items-start justify-between gap-3 pr-8">
                         <div class="min-w-0">
                             <div class="truncate text-sm font-semibold text-slate-900">{{ $item->koleksi?->judul }}</div>
                             <div class="mt-1 truncate text-xs text-slate-600">{{ $item->koleksi?->pengarang }}</div>
@@ -128,7 +146,7 @@
                         </div>
                     @endif
 
-                    <div class="mt-4">
+                    <div class="mt-4 flex gap-2">
                         <button
                             type="button"
                             data-admin-modal-open="peminjaman"
@@ -140,10 +158,23 @@
                             data-jatuh="{{ optional($item->tanggal_jatuh_tempo)->format('Y-m-d') }}"
                             data-kembali="{{ optional($item->tanggal_kembali)->format('Y-m-d') }}"
                             data-catatan="{{ $item->catatan_admin }}"
-                            class="w-full rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700"
+                            class="flex-1 rounded-2xl bg-emerald-600 px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700"
                         >
                             Update
                         </button>
+                        <form action="{{ route('admin.peminjaman.destroy', $item) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus peminjaman ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="grid h-11 w-11 place-items-center rounded-2xl border border-rose-100 bg-rose-50 text-rose-600 shadow-soft transition hover:bg-rose-100" title="Hapus">
+                                <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3 6h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 11v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                    <path d="M14 11v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 </div>
             @empty
@@ -152,6 +183,7 @@
                 </div>
             @endforelse
         </div>
+        </form>
 
         <div class="mt-6">
             {{ $peminjamans->links() }}
@@ -265,6 +297,48 @@
             if (!modal || modal.classList.contains('hidden')) return;
             close();
         });
+    })();
+
+    (() => {
+        const selectAll = document.getElementById('selectAll');
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        const deleteBtn = document.getElementById('deleteSelectedBtn');
+        const selectedCount = document.getElementById('selectedCount');
+
+        const updateDeleteButton = () => {
+            const checkedCount = document.querySelectorAll('.item-checkbox:checked').length;
+            if (checkedCount > 0) {
+                deleteBtn.classList.remove('hidden');
+                selectedCount.textContent = checkedCount;
+            } else {
+                deleteBtn.classList.add('hidden');
+            }
+        };
+
+        if (selectAll) {
+            selectAll.addEventListener('change', () => {
+                itemCheckboxes.forEach(cb => {
+                    cb.checked = selectAll.checked;
+                });
+                updateDeleteButton();
+            });
+        }
+
+        itemCheckboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                if (!cb.checked) selectAll.checked = false;
+                if (document.querySelectorAll('.item-checkbox:checked').length === itemCheckboxes.length) {
+                    selectAll.checked = true;
+                }
+                updateDeleteButton();
+            });
+        });
+
+        window.confirmBulkDelete = () => {
+            if (confirm('Apakah Anda yakin ingin menghapus item yang dipilih?')) {
+                document.getElementById('bulkDeleteForm').submit();
+            }
+        };
     })();
 </script>
 @endpush

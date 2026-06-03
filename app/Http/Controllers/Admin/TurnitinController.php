@@ -80,6 +80,41 @@ class TurnitinController extends Controller
         return back()->with('status', 'Turnitin diperbarui.');
     }
 
+    public function destroy(TurnitinSubmission $turnitinSubmission)
+    {
+        if ($turnitinSubmission->file_doc) {
+            Storage::disk('public')->delete($turnitinSubmission->file_doc);
+        }
+        if ($turnitinSubmission->report_pdf) {
+            Storage::disk('public')->delete($turnitinSubmission->report_pdf);
+        }
+        $turnitinSubmission->delete();
+
+        return back()->with('status', 'Pengajuan Turnitin berhasil dihapus.');
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) {
+            return back()->with('status', 'Tidak ada item yang dipilih.');
+        }
+
+        $submissions = TurnitinSubmission::whereIn('id', $ids)->get();
+
+        foreach ($submissions as $item) {
+            if ($item->file_doc) {
+                Storage::disk('public')->delete($item->file_doc);
+            }
+            if ($item->report_pdf) {
+                Storage::disk('public')->delete($item->report_pdf);
+            }
+            $item->delete();
+        }
+
+        return back()->with('status', count($ids) . ' pengajuan Turnitin berhasil dihapus.');
+    }
+
     public function exportPdf(Request $request)
     {
         $status = (string) $request->query('status', '');

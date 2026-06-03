@@ -78,6 +78,24 @@ class PeminjamanController extends Controller
         return back()->with('status', 'Peminjaman diperbarui.');
     }
 
+    public function destroy(Peminjaman $peminjaman)
+    {
+        $peminjaman->delete();
+        return back()->with('status', 'Peminjaman berhasil dihapus.');
+    }
+
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        if (empty($ids)) {
+            return back()->with('status', 'Tidak ada item yang dipilih.');
+        }
+
+        Peminjaman::whereIn('id', $ids)->delete();
+
+        return back()->with('status', count($ids) . ' peminjaman berhasil dihapus.');
+    }
+
     public function exportPdf(Request $request)
     {
         $status = (string) $request->query('status', '');
