@@ -78,15 +78,7 @@
                                             {{ $user->password_plain }}
                                         </code>
                                     @else
-                                        <div class="group relative inline-block cursor-help">
-                                            <code class="rounded bg-slate-100 px-2 py-1 text-[10px] font-medium text-slate-400">
-                                                {{ substr($user->password, 0, 12) }}...
-                                            </code>
-                                            <div class="invisible absolute bottom-full left-1/2 mb-2 w-max -translate-x-1/2 rounded-lg bg-slate-800 px-3 py-1.5 text-xs text-white shadow-xl transition-all group-hover:visible">
-                                                Terenkripsi (Hash)
-                                                <div class="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-800"></div>
-                                            </div>
-                                        </div>
+                                        <span class="text-xs text-slate-400">—</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">

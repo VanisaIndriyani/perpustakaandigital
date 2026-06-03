@@ -111,7 +111,7 @@
                 @if($user->password_plain)
                     <span style="font-weight: bold; color: #047857;">{{ $user->password_plain }}</span>
                 @else
-                    <span style="color: #94a3b8;">{{ substr($user->password, 0, 15) }}...</span>
+                    <span style="color: #94a3b8;">—</span>
                 @endif
             </td>
             <td>
