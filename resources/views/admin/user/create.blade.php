@@ -10,7 +10,7 @@
             <a href="{{ route('admin.user.index') }}" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Kembali</a>
         </div>
 
-        <form class="mt-6 space-y-6" method="POST" action="{{ route('admin.user.store') }}">
+        <form class="mt-6 space-y-6" method="POST" action="{{ route('admin.user.store') }}" enctype="multipart/form-data">
             @csrf
 
             <div class="grid gap-4 md:grid-cols-2">
@@ -49,7 +49,11 @@
                     @error('phone') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
                 </div>
 
-                <div class="space-y-1"></div>
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold text-slate-700" for="kta">Upload KTA Perpus</label>
+                    <input id="kta" name="kta" type="file" accept="image/*" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4">
+                    @error('kta') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
+                </div>
 
                 <div class="space-y-1">
                     <label class="text-sm font-semibold text-slate-700" for="password">Password</label>

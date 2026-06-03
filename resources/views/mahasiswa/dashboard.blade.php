@@ -75,6 +75,14 @@
                             </svg>
                             Jelajahi Koleksi
                         </a>
+                        @if($user->kta_url)
+                            <button type="button" onclick="openKtaModal()" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500/30 px-5 py-3 text-sm font-semibold text-white ring-1 ring-white/25 transition hover:bg-amber-500/40">
+                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Lihat KTA Perpus
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -221,4 +229,48 @@
             </div>
         </div>
     </div>
+
+    @if($user->kta_url)
+        <div id="ktaModal" class="fixed inset-0 z-[60] hidden">
+            <div onclick="closeKtaModal()" class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"></div>
+            <div class="absolute inset-x-0 top-1/2 mx-auto w-full max-w-lg -translate-y-1/2 px-4">
+                <div class="relative overflow-hidden rounded-3xl bg-white shadow-2xl">
+                    <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+                        <div class="text-lg font-semibold text-slate-900">KTA Perpustakaan</div>
+                        <button onclick="closeKtaModal()" class="rounded-xl p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <div class="aspect-[1.58/1] w-full overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-200">
+                            <img src="{{ $user->kta_url }}" alt="KTA Perpustakaan" class="h-full w-full object-contain">
+                        </div>
+                        <div class="mt-6 flex gap-3">
+                            <a href="{{ $user->kta_url }}" download="KTA-{{ $user->nim ?: $user->name }}.jpg" class="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-soft transition hover:bg-emerald-700">
+                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Unduh KTA
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
+
+@push('scripts')
+    <script>
+        function openKtaModal() {
+            document.getElementById('ktaModal')?.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeKtaModal() {
+            document.getElementById('ktaModal')?.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    </script>
+@endpush

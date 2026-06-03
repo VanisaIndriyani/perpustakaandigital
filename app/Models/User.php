@@ -25,6 +25,11 @@ class User extends Authenticatable
         'role',
         'nim',
         'phone',
+        'kta_path',
+    ];
+
+    protected $appends = [
+        'kta_url',
     ];
 
     /**
@@ -59,5 +64,14 @@ class User extends Authenticatable
     public function turnitinSubmissions(): HasMany
     {
         return $this->hasMany(TurnitinSubmission::class);
+    }
+
+    public function getKtaUrlAttribute(): ?string
+    {
+        if (!$this->kta_path) {
+            return null;
+        }
+
+        return asset('storage/' . ltrim($this->kta_path, '/'));
     }
 }

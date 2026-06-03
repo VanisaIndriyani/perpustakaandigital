@@ -10,7 +10,7 @@
             <a href="{{ route('admin.user.index') }}" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Kembali</a>
         </div>
 
-        <form class="mt-6 space-y-6" method="POST" action="{{ route('admin.user.update', $user) }}">
+        <form class="mt-6 space-y-6" method="POST" action="{{ route('admin.user.update', $user) }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -49,7 +49,17 @@
                     @error('phone') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
                 </div>
 
-                <div class="space-y-1"></div>
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold text-slate-700" for="kta">Upload KTA Perpus</label>
+                    <input id="kta" name="kta" type="file" accept="image/*" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4">
+                    @error('kta') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
+                    @if($user->kta_url)
+                        <div class="mt-2 flex items-center gap-3 rounded-2xl bg-slate-50 p-3 ring-1 ring-slate-200/60">
+                            <img src="{{ $user->kta_url }}" alt="KTA" class="h-12 w-12 rounded-lg object-cover">
+                            <div class="text-xs font-semibold text-slate-600">KTA saat ini</div>
+                        </div>
+                    @endif
+                </div>
 
                 <div class="space-y-1 md:col-span-2">
                     <div class="rounded-2xl bg-amber-50 p-4 ring-1 ring-amber-200/60">

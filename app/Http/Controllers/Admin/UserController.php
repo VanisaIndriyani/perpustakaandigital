@@ -52,7 +52,13 @@ class UserController extends Controller
             'role' => ['required', Rule::in(['admin', 'staf', 'mahasiswa'])],
             'nim' => ['nullable', 'string', 'max:50', 'unique:users,nim'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'kta' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        $ktaPath = null;
+        if ($request->hasFile('kta')) {
+            $ktaPath = $request->file('kta')->store('kta', 'public');
+        }
 
         User::create([
             'name' => $validated['name'],
@@ -62,6 +68,7 @@ class UserController extends Controller
             'role' => $validated['role'],
             'nim' => $validated['nim'],
             'phone' => $validated['phone'],
+            'kta_path' => $ktaPath,
         ]);
 
         return redirect()
@@ -83,7 +90,12 @@ class UserController extends Controller
             'role' => ['required', Rule::in(['admin', 'staf', 'mahasiswa'])],
             'nim' => ['nullable', 'string', 'max:50', Rule::unique('users', 'nim')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:20'],
+            'kta' => ['nullable', 'image', 'max:2048'],
         ]);
+
+        if ($request->hasFile('kta')) {
+            $validated['kta_path'] = $request->file('kta')->store('kta', 'public');
+        }
 
         if (!empty($validated['password'])) {
             $validated['password_plain'] = $validated['password'];
