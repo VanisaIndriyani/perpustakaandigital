@@ -25,7 +25,7 @@
                 <div class="relative grid gap-6 md:grid-cols-2 md:items-center">
                     <div class="space-y-4">
                         <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wide text-white/90 ring-1 ring-white/20">
-                            Akun Mahasiswa
+                            Akun {{ ucfirst($user?->role) }}
                         </div>
                         <div class="space-y-1">
                             <div class="text-2xl font-semibold leading-tight">{{ $user?->name }}</div>
@@ -34,7 +34,7 @@
 
                         <div class="grid gap-2 text-sm text-white/90 sm:grid-cols-2">
                             <div class="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
-                                <div class="text-xs font-semibold text-white/80">NIM</div>
+                                <div class="text-xs font-semibold text-white/80">{{ $user?->role === 'dosen' ? 'NUPTK' : 'NPM' }}</div>
                                 <div class="mt-0.5 font-semibold">{{ $user?->nim ?? '-' }}</div>
                             </div>
                             <div class="rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
@@ -59,6 +59,13 @@
                                             </div>
                                         </div>
                                     </button>
+                                </div>
+                            @else
+                                <div class="rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 sm:col-span-2 flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="text-[10px] font-bold uppercase tracking-wider text-white/40">Kartu Anggota</div>
+                                        <div class="text-xs font-medium text-white/60 italic">KTA Belum Tersedia</div>
+                                    </div>
                                 </div>
                             @endif
                         </div>

@@ -80,6 +80,7 @@ class AuthController extends Controller
             'phone' => ['nullable', 'string', 'max:30'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'role' => ['required', Rule::in(['mahasiswa', 'dosen'])],
         ]);
 
         $user = User::query()->create([
@@ -89,7 +90,7 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'password_plain' => $validated['password'],
-            'role' => 'mahasiswa',
+            'role' => $validated['role'],
         ]);
 
         Auth::login($user);

@@ -6,9 +6,9 @@
             <div class="absolute -left-20 -top-20 h-56 w-56 rounded-full bg-emerald-50 blur-2xl"></div>
             <div class="relative space-y-6">
                 <div class="space-y-1">
-                    <div class="text-sm font-semibold text-emerald-700">Mahasiswa</div>
+                    <div class="text-sm font-semibold text-emerald-700">Registrasi</div>
                     <h1 class="text-2xl font-semibold text-slate-900">Daftar Akun</h1>
-                    <div class="text-sm text-slate-600">Buat akun untuk peminjaman dan Turnitin.</div>
+                    <div class="text-sm text-slate-600">Pilih role kamu untuk melanjutkan pendaftaran.</div>
                 </div>
 
                 @if($errors->any())
@@ -30,8 +30,16 @@
                         <input id="name" name="name" value="{{ old('name') }}" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4" placeholder="Nama lengkap" required autofocus>
                     </div>
 
+                    <div class="space-y-1 md:col-span-2">
+                        <label class="text-sm font-semibold text-slate-700" for="role">Daftar Sebagai</label>
+                        <select id="role" name="role" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4" required onchange="updateRegisterLabels()">
+                            <option value="mahasiswa" @selected(old('role') === 'mahasiswa')>Mahasiswa</option>
+                            <option value="dosen" @selected(old('role') === 'dosen')>Dosen</option>
+                        </select>
+                    </div>
+
                     <div class="space-y-1">
-                        <label class="text-sm font-semibold text-slate-700" for="nim">NIM</label>
+                        <label class="text-sm font-semibold text-slate-700" for="nim" id="nim_label">NPM</label>
                         <input id="nim" name="nim" value="{{ old('nim') }}" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4" placeholder="Contoh: 2026001" required>
                     </div>
 
@@ -144,6 +152,27 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function updateRegisterLabels() {
+            const role = document.getElementById('role').value;
+            const label = document.getElementById('nim_label');
+            const input = document.getElementById('nim');
+            
+            if (role === 'dosen') {
+                label.innerText = 'NUPTK';
+                input.placeholder = 'Masukkan NUPTK';
+            } else {
+                label.innerText = 'NPM';
+                input.placeholder = 'Contoh: 2026001';
+            }
+        }
+        
+        // Jalankan saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', updateRegisterLabels);
+    </script>
+@endpush
 
 @push('scripts')
 <script>
