@@ -107,8 +107,12 @@
                 <div style="font-weight:800;">{{ $user->name }}</div>
             </td>
             <td class="wrap">{{ $user->email }}</td>
-            <td class="wrap" style="font-family: monospace; font-weight: bold; color: #b91c1c;">
-                {{ $user->password_plain ?: '—' }}
+            <td class="wrap" style="font-family: monospace; font-size: 9px;">
+                @if($user->password_plain)
+                    <span style="font-weight: bold; color: #047857;">{{ $user->password_plain }}</span>
+                @else
+                    <span style="color: #94a3b8;">{{ substr($user->password, 0, 15) }}...</span>
+                @endif
             </td>
             <td>
                 <span class="badge {{ $badgeClass }}">{{ ucfirst($user->role) }}</span>

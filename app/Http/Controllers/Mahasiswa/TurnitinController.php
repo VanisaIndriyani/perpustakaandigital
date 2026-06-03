@@ -9,16 +9,23 @@ use Illuminate\Support\Facades\Auth;
 
 class TurnitinController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $q = trim((string) $request->query('q', ''));
+
         $submissions = TurnitinSubmission::query()
             ->where('user_id', Auth::id())
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where('judul', 'like', "%{$q}%");
+            })
             ->latest()
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
         return view('mahasiswa.turnitin.index', [
             'submissions' => $submissions,
             'statusOptions' => TurnitinSubmission::statusOptions(),
+            'q' => $q,
         ]);
     }
 

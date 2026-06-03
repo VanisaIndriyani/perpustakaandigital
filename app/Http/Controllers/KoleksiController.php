@@ -37,6 +37,44 @@ class KoleksiController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $q = trim((string) $request->query('q', ''));
+        $perPage = (int) $request->query('per_page', 12);
+
+        $koleksis = Koleksi::query()
+            ->with('kategori')
+            ->when($q !== '', function ($query) use ($q) {
+                $query->where(function ($inner) use ($q) {
+                    $inner
+                        ->where('judul', 'like', "%{$q}%")
+                        ->orWhere('pengarang', 'like', "%{$q}%")
+                        ->orWhere('tahun', 'like', "%{$q}%");
+                });
+            })
+            ->latest()
+            ->paginate($perPage)
+            ->withQueryString();
+
+        if ($request->boolean('partial') || $request->ajax()) {
+            return view('koleksi._grid', [
+                'koleksis' => $koleksis,
+                'jenisLabel' => 'Semua',
+                'perPage' => $perPage,
+            ]);
+        }
+
+        return view('koleksi.index', [
+            'jenis' => null,
+            'jenisSlug' => 'search',
+            'jenisLabel' => 'Hasil Pencarian',
+            'q' => $q,
+            'koleksis' => $koleksis,
+            'perPage' => $perPage,
+            'rekomendasi' => collect(),
+        ]);
+    }
+
     public function index(Request $request, string $jenisSlug)
     {
         $jenis = self::JENIS_SLUG_MAP[$jenisSlug] ?? null;

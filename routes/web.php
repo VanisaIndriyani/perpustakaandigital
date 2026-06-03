@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\KoleksiController::class, 'home'])->name('home');
+Route::get('/search', [\App\Http\Controllers\KoleksiController::class, 'search'])->name('koleksi.search');
 
 Route::get('/jurnal', [\App\Http\Controllers\KoleksiController::class, 'index'])->defaults('jenisSlug', 'jurnal')->name('koleksi.jurnal');
 Route::get('/e-jurnal', [\App\Http\Controllers\KoleksiController::class, 'index'])->defaults('jenisSlug', 'e-jurnal')->name('koleksi.ejurnal');

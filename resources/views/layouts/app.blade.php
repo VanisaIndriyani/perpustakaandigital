@@ -44,6 +44,20 @@
                 <a href="{{ route('mahasiswa.turnitin.index') }}" class="{{ request()->routeIs('mahasiswa.turnitin.*') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-600 hover:bg-white/80 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Turnitin</a>
             </nav>
 
+            <div class="hidden lg:block lg:max-w-[200px] xl:max-w-xs flex-1">
+                <form action="{{ route('koleksi.search') }}" method="GET">
+                    <div class="relative">
+                        <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <input type="text" name="q" value="{{ request('q') }}" class="w-full rounded-xl border border-slate-200 bg-slate-50/80 py-2 pl-9 pr-3 text-sm text-slate-900 outline-none transition focus:border-emerald-300 focus:bg-white focus:ring-4 focus:ring-emerald-100/50" placeholder="Cari di semua menu...">
+                    </div>
+                </form>
+            </div>
+
             <div class="flex items-center gap-2">
                 @auth
                     @if(auth()->user()->role === 'mahasiswa')
@@ -78,7 +92,18 @@
         </div>
 
         <div id="mobileNav" class="hidden border-t border-emerald-100/70 bg-white md:hidden">
-            <div class="mx-auto px-4 py-3 sm:px-6 lg:px-8">
+            <div class="mx-auto px-4 py-3 sm:px-6 lg:px-8 space-y-3">
+                <form action="{{ route('koleksi.search') }}" method="GET">
+                    <div class="relative">
+                        <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <input type="text" name="q" value="{{ request('q') }}" class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-9 pr-3 text-sm text-slate-900 outline-none transition focus:border-emerald-300 focus:bg-white focus:ring-4 focus:ring-emerald-100/50" placeholder="Cari di semua menu...">
+                    </div>
+                </form>
                 <div class="grid grid-cols-2 gap-2 rounded-2xl bg-slate-50/80 p-2 ring-1 ring-slate-200/60 shadow-soft">
                     <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Home</a>
                     <a href="{{ route('koleksi.jurnal') }}" class="{{ request()->routeIs('koleksi.jurnal') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Jurnal Kampus</a>
