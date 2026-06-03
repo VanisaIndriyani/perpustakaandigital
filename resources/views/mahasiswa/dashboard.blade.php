@@ -41,6 +41,26 @@
                                 <div class="text-xs font-semibold text-white/80">No. HP</div>
                                 <div class="mt-0.5 font-semibold">{{ $user?->phone ?? '-' }}</div>
                             </div>
+                            @if($user->kta_url)
+                                <div class="rounded-2xl bg-white/10 p-1 ring-1 ring-white/15 sm:col-span-2">
+                                    <button type="button" onclick="openKtaModal()" class="group relative block w-full overflow-hidden rounded-xl bg-emerald-900/20 transition hover:bg-emerald-900/30">
+                                        <div class="flex items-center gap-3 p-2">
+                                            <div class="h-10 w-14 shrink-0 overflow-hidden rounded-lg bg-white/20">
+                                                <img src="{{ $user->kta_url }}" alt="KTA" class="h-full w-full object-cover">
+                                            </div>
+                                            <div class="text-left">
+                                                <div class="text-[10px] font-bold uppercase tracking-wider text-white/60">Kartu Anggota</div>
+                                                <div class="text-xs font-semibold text-white">Lihat KTA Perpus</div>
+                                            </div>
+                                            <div class="ml-auto pr-1">
+                                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4 text-white/40 transition group-hover:translate-x-0.5 group-hover:text-white" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -75,14 +95,6 @@
                             </svg>
                             Jelajahi Koleksi
                         </a>
-                        @if($user->kta_url)
-                            <button type="button" onclick="openKtaModal()" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500/30 px-5 py-3 text-sm font-semibold text-white ring-1 ring-white/25 transition hover:bg-amber-500/40">
-                                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                                Lihat KTA Perpus
-                            </button>
-                        @endif
                     </div>
                 </div>
             </div>
