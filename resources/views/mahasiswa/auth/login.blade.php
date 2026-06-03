@@ -117,7 +117,7 @@
 
                 <div class="text-center text-sm text-slate-600">
                     Belum punya akun?
-                    <a href="{{ route('register') }}" class="font-semibold text-emerald-700 hover:text-emerald-800">Daftar (Mahasiswa)</a>
+                    <a href="{{ route('register') }}" class="font-semibold text-emerald-700 hover:text-emerald-800">Daftar (Mahasiswa/dosen)</a>
                 </div>
             </div>
         </div>
