@@ -63,13 +63,13 @@
 
             <div class="grid gap-4 md:grid-cols-2">
                 <div class="space-y-1">
-                    <label class="text-sm font-semibold text-slate-700" for="cover">Cover (JPG/PNG/WEBP, max 2MB)</label>
+                    <label class="text-sm font-semibold text-slate-700" for="cover">Cover (JPG/PNG/WEBP, max 5MB)</label>
                     <input id="cover" name="cover" type="file" accept="image/jpeg,image/png,image/webp" class="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-soft">
                     @error('cover') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
                 </div>
 
                 <div class="space-y-1">
-                    <label class="text-sm font-semibold text-slate-700" for="file_pdf">File PDF (max 20MB)</label>
+                    <label class="text-sm font-semibold text-slate-700" for="file_pdf">File PDF (max 50MB)</label>
                     <input id="file_pdf" name="file_pdf" type="file" accept="application/pdf" class="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-soft">
                     @error('file_pdf') <div class="text-sm font-semibold text-rose-600">{{ $message }}</div> @enderror
                 </div>

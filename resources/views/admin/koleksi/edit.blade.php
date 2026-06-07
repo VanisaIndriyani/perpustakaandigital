@@ -62,13 +62,10 @@
 
             <div class="grid gap-4 md:grid-cols-2">
                 <div class="space-y-2">
-                    <div class="text-sm font-semibold text-slate-700">Cover</div>
+                    <div class="text-sm font-semibold text-slate-700">Cover (JPG/PNG/WEBP, max 5MB)</div>
                     @if($koleksi->cover)
-                        <div class="flex items-center gap-3">
-                            <div class="h-16 w-12 overflow-hidden rounded-xl bg-slate-100 ring-1 ring-slate-200">
-                                <img src="{{ $koleksi->cover_url }}" alt="{{ $koleksi->judul }}" class="h-full w-full object-cover">
-                            </div>
-                            <div class="text-sm text-slate-600">Upload cover baru untuk mengganti.</div>
+                        <div class="relative inline-block">
+                            <img src="{{ $koleksi->cover_url }}" alt="Cover" class="h-40 w-28 rounded-xl object-cover shadow-soft">
                         </div>
                         <label class="inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 shadow-soft">
                             <input type="checkbox" name="remove_cover" value="1" class="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-200" @checked(old('remove_cover'))>
@@ -80,7 +77,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <div class="text-sm font-semibold text-slate-700">File PDF</div>
+                    <div class="text-sm font-semibold text-slate-700">File PDF (max 50MB)</div>
                     @if($koleksi->file_pdf)
                         <a href="{{ $koleksi->file_pdf_url }}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:bg-slate-50">Lihat PDF Saat Ini</a>
                         <label class="mt-2 inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 shadow-soft">

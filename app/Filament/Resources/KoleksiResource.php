@@ -69,15 +69,15 @@ class KoleksiResource extends Resource
                             ->directory('covers')
                             ->image()
                             ->imagePreviewHeight('200')
-                            ->maxSize(2048)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->maxSize(5120)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/jpg'])
                             ->nullable(),
 
                         \Filament\Forms\Components\FileUpload::make('file_pdf')
                             ->label('File PDF')
                             ->disk('public')
                             ->directory('pdf')
-                            ->maxSize(20480)
+                            ->maxSize(51200)
                             ->acceptedFileTypes(['application/pdf'])
                             ->nullable(),
                     ]),

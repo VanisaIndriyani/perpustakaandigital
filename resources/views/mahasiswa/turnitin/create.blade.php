@@ -27,7 +27,7 @@
                         <span class="mt-0.5 grid h-7 w-7 place-items-center rounded-full bg-white/10 text-xs font-semibold ring-1 ring-white/20">2</span>
                         <div>
                             <div class="font-semibold">Upload dokumen</div>
-                            <div class="text-white/80">Format PDF/DOC/DOCX, maksimal 20MB.</div>
+                            <div class="text-white/80">Format PDF/DOC/DOCX, maksimal 50MB.</div>
                         </div>
                     </div>
                     <div class="flex items-start gap-3 rounded-2xl bg-white/10 px-4 py-3 ring-1 ring-white/15">
@@ -84,7 +84,7 @@
                     <div class="space-y-2">
                         <div class="flex items-center justify-between gap-3">
                             <label class="text-sm font-semibold text-slate-700" for="file_doc">File Dokumen</label>
-                            <span class="text-xs text-slate-500">PDF / DOC / DOCX • Maks 20MB</span>
+                            <span class="text-xs text-slate-500">PDF / DOC / DOCX • Maks 50MB</span>
                         </div>
 
                         <label class="group block cursor-pointer rounded-3xl border border-dashed border-slate-200 bg-slate-50 px-5 py-5 shadow-soft transition hover:border-emerald-200 hover:bg-emerald-50/50">

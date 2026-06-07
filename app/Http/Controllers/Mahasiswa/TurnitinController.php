@@ -38,7 +38,9 @@ class TurnitinController extends Controller
     {
         $validated = $request->validate([
             'judul' => ['required', 'string', 'max:180'],
-            'file_doc' => ['required', 'file', 'max:20480', 'mimetypes:application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+            'file_doc' => ['required', 'file', 'max:51200', 'mimes:pdf,doc,docx'],
+        ], [
+            'file_doc.uploaded' => 'Dokumen gagal diunggah. Pastikan ukuran file tidak melebihi batas server (max 50MB) dan koneksi stabil.',
         ]);
 
         $path = $request->file('file_doc')->store('turnitin/submissions', 'public');

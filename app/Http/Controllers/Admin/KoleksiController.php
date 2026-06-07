@@ -257,10 +257,13 @@ class KoleksiController extends Controller
             'kategori_id' => ['required', 'integer', Rule::exists('kategoris', 'id')],
             'jenis' => ['required', 'string', Rule::in($jenisKeys)],
             'deskripsi' => ['nullable', 'string'],
-            'cover' => ['nullable', 'file', 'max:2048', 'mimetypes:image/jpeg,image/png,image/webp'],
-            'file_pdf' => ['nullable', 'file', 'max:20480', 'mimetypes:application/pdf'],
+            'cover' => ['nullable', 'file', 'max:5120', 'mimes:jpeg,png,jpg,webp'],
+            'file_pdf' => ['nullable', 'file', 'max:51200', 'mimes:pdf'],
             'remove_cover' => ['nullable', 'boolean'],
             'remove_file_pdf' => ['nullable', 'boolean'],
+        ], [
+            'file_pdf.uploaded' => 'File PDF gagal diunggah. Pastikan ukuran file tidak melebihi batas server (max 50MB) dan koneksi stabil.',
+            'cover.uploaded' => 'Cover gagal diunggah. Pastikan ukuran file tidak melebihi batas server (max 5MB).',
         ]);
     }
 
