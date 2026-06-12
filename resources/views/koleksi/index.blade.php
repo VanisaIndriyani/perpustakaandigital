@@ -118,8 +118,8 @@
                     </div>
                 </div>
 
-                <div class="w-full md:max-w-2xl">
-                    <div class="grid gap-3 md:grid-cols-[minmax(0,1fr),220px]">
+                <div class="w-full md:max-w-4xl">
+                    <div class="grid gap-3 md:grid-cols-[minmax(0,1fr),220px,220px]">
                         <div>
                             <label class="sr-only" for="koleksiSearch">Search</label>
                             <div class="relative">
@@ -136,9 +136,19 @@
                         <div>
                             <label class="sr-only" for="koleksiKategori">Kategori</label>
                             <select id="koleksiKategori" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4">
-                                <option value="">Semua Ketegri</option>
+                                <option value="">Semua Kategori</option>
                                 @foreach(($kategoris ?? collect()) as $kategori)
                                     <option value="{{ $kategori->id }}" @selected((string) ($kategoriId ?? '') === (string) $kategori->id)>{{ $kategori->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="sr-only" for="koleksiTahun">Tahun</label>
+                            <select id="koleksiTahun" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-soft outline-none ring-emerald-200 transition focus:border-emerald-300 focus:ring-4">
+                                <option value="">Semua Tahun</option>
+                                @foreach(($tahuns ?? collect()) as $t)
+                                    <option value="{{ $t }}" @selected((string) request('tahun') === (string) $t)>{{ $t }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -159,7 +169,8 @@
             const container = document.getElementById('koleksiGrid');
             const input = document.getElementById('koleksiSearch');
             const kategoriSelect = document.getElementById('koleksiKategori');
-            if (!container || !input || !kategoriSelect) return;
+            const tahunSelect = document.getElementById('koleksiTahun');
+            if (!container || !input || !kategoriSelect || !tahunSelect) return;
 
             const baseUrl = container.getAttribute('data-base-url') || window.location.pathname;
             let timer = null;
@@ -171,11 +182,13 @@
 
                 const q = typeof overrides.q !== 'undefined' ? overrides.q : (current.searchParams.get('q') || '');
                 const kategoriId = typeof overrides.kategoriId !== 'undefined' ? overrides.kategoriId : (current.searchParams.get('kategori_id') || '');
+                const tahun = typeof overrides.tahun !== 'undefined' ? overrides.tahun : (current.searchParams.get('tahun') || '');
                 const page = typeof overrides.page !== 'undefined' ? overrides.page : (current.searchParams.get('page') || '');
                 const perPage = typeof overrides.perPage !== 'undefined' ? overrides.perPage : (current.searchParams.get('per_page') || '');
 
                 if (q && q.trim() !== '') url.searchParams.set('q', q.trim());
                 if (kategoriId && kategoriId !== '') url.searchParams.set('kategori_id', kategoriId);
+                if (tahun && tahun !== '') url.searchParams.set('tahun', tahun);
                 if (page && page !== '') url.searchParams.set('page', page);
                 if (perPage && perPage !== '') url.searchParams.set('per_page', perPage);
                 url.searchParams.set('partial', '1');
@@ -211,7 +224,7 @@
             const schedule = (q) => {
                 clearTimeout(timer);
                 timer = setTimeout(() => {
-                    fetchGrid(buildUrl({ q, kategoriId: kategoriSelect.value || '', page: '' })).catch(() => {
+                    fetchGrid(buildUrl({ q, kategoriId: kategoriSelect.value || '', tahun: tahunSelect.value || '', page: '' })).catch(() => {
                         container.classList.remove('opacity-70');
                     });
                 }, 300);
@@ -219,7 +232,12 @@
 
             input.addEventListener('input', (e) => schedule(e.target.value || ''));
             kategoriSelect.addEventListener('change', (e) => {
-                fetchGrid(buildUrl({ q: input.value || '', kategoriId: e.target.value || '', page: '' })).catch(() => {
+                fetchGrid(buildUrl({ q: input.value || '', kategoriId: e.target.value || '', tahun: tahunSelect.value || '', page: '' })).catch(() => {
+                    container.classList.remove('opacity-70');
+                });
+            });
+            tahunSelect.addEventListener('change', (e) => {
+                fetchGrid(buildUrl({ q: input.value || '', kategoriId: kategoriSelect.value || '', tahun: e.target.value || '', page: '' })).catch(() => {
                     container.classList.remove('opacity-70');
                 });
             });
@@ -227,7 +245,7 @@
             container.addEventListener('change', (e) => {
                 const select = e.target.closest('select[name="per_page"]');
                 if (!select) return;
-                fetchGrid(buildUrl({ q: input.value || '', kategoriId: kategoriSelect.value || '', page: '', perPage: select.value || '' })).catch(() => {
+                fetchGrid(buildUrl({ q: input.value || '', kategoriId: kategoriSelect.value || '', tahun: tahunSelect.value || '', page: '', perPage: select.value || '' })).catch(() => {
                     container.classList.remove('opacity-70');
                 });
             });
@@ -246,9 +264,11 @@
                 e.preventDefault();
                 const q = input.value || '';
                 const kategoriId = kategoriSelect.value || '';
+                const tahun = tahunSelect.value || '';
                 url.searchParams.set('partial', '1');
                 if (q && q.trim() !== '') url.searchParams.set('q', q.trim());
                 if (kategoriId && kategoriId !== '') url.searchParams.set('kategori_id', kategoriId);
+                if (tahun && tahun !== '') url.searchParams.set('tahun', tahun);
                 fetchGrid(url).catch(() => {
                     container.classList.remove('opacity-70');
                 });

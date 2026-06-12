@@ -76,19 +76,31 @@
                         <div class="text-sm text-slate-600">Koleksi terbaru untuk kategori {{ strtolower($jenisLabel) }}.</div>
                     </div>
 
-                    <div class="hidden flex-1 max-w-md md:block">
-                        <form action="{{ route($routeName) }}" method="GET">
-                            <div class="relative">
-                                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                                    <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                                        <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                                    </svg>
-                                </span>
-                                <input type="text" name="q" class="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 outline-none transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100/50" placeholder="Cari di koleksi {{ strtolower($jenisLabel) }}...">
-                            </div>
-                        </form>
+                    <div class="hidden flex-1 max-w-4xl md:block">
+                <form action="{{ route($routeName) }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="relative">
+                        <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <input type="text" name="q" class="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm text-slate-900 outline-none transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100/50" placeholder="Cari di koleksi {{ strtolower($jenisLabel) }}...">
                     </div>
+                    <select name="kategori_id" class="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-sm text-slate-900 outline-none transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100/50">
+                        <option value="">Semua Kategori</option>
+                        @foreach($kategoris as $kategori)
+                            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                        @endforeach
+                    </select>
+                    <select name="tahun" class="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 text-sm text-slate-900 outline-none transition focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100/50">
+                        <option value="">Semua Tahun</option>
+                        @foreach($tahuns as $tahun)
+                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
 
                     <div class="flex items-center gap-2">
                         <div class="hidden items-center gap-2 sm:flex">

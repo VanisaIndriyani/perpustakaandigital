@@ -32,9 +32,14 @@ class KoleksiController extends Controller
                 ->get();
         }
 
+        $kategoris = Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']);
+        $tahuns = Koleksi::query()->whereNotNull('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun');
+
         return view('home', [
             'jenisOptions' => $jenisOptions,
             'latestByJenis' => $latestByJenis,
+            'kategoris' => $kategoris,
+            'tahuns' => $tahuns,
         ]);
     }
 
@@ -42,6 +47,7 @@ class KoleksiController extends Controller
     {
         $q = trim((string) $request->query('q', ''));
         $kategoriId = (string) $request->query('kategori_id', '');
+        $tahun = (string) $request->query('tahun', '');
         $perPage = (int) $request->query('per_page', 12);
 
         $koleksis = Koleksi::query()
@@ -55,6 +61,7 @@ class KoleksiController extends Controller
                 });
             })
             ->when($kategoriId !== '', fn ($query) => $query->where('kategori_id', $kategoriId))
+            ->when($tahun !== '', fn ($query) => $query->where('tahun', $tahun))
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
@@ -74,6 +81,7 @@ class KoleksiController extends Controller
             'q' => $q,
             'kategoriId' => $kategoriId,
             'kategoris' => Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']),
+            'tahuns' => Koleksi::query()->whereNotNull('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun'),
             'koleksis' => $koleksis,
             'perPage' => $perPage,
             'rekomendasi' => collect(),
@@ -87,6 +95,7 @@ class KoleksiController extends Controller
 
         $q = trim((string) $request->query('q', ''));
         $kategoriId = (string) $request->query('kategori_id', '');
+        $tahun = (string) $request->query('tahun', '');
         $perPage = (int) $request->query('per_page', 10);
         $allowedPerPage = [10, 12, 24, 48];
         if (!in_array($perPage, $allowedPerPage, true)) {
@@ -105,6 +114,7 @@ class KoleksiController extends Controller
                 });
             })
             ->when($kategoriId !== '', fn ($query) => $query->where('kategori_id', $kategoriId))
+            ->when($tahun !== '', fn ($query) => $query->where('tahun', $tahun))
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
@@ -131,6 +141,7 @@ class KoleksiController extends Controller
             'q' => $q,
             'kategoriId' => $kategoriId,
             'kategoris' => Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']),
+            'tahuns' => Koleksi::query()->whereNotNull('tahun')->distinct()->orderBy('tahun', 'desc')->pluck('tahun'),
             'koleksis' => $koleksis,
             'perPage' => $perPage,
             'rekomendasi' => $rekomendasi,
