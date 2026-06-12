@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use App\Models\Koleksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -40,6 +41,7 @@ class KoleksiController extends Controller
     public function search(Request $request)
     {
         $q = trim((string) $request->query('q', ''));
+        $kategoriId = (string) $request->query('kategori_id', '');
         $perPage = (int) $request->query('per_page', 12);
 
         $koleksis = Koleksi::query()
@@ -52,6 +54,7 @@ class KoleksiController extends Controller
                         ->orWhere('tahun', 'like', "%{$q}%");
                 });
             })
+            ->when($kategoriId !== '', fn ($query) => $query->where('kategori_id', $kategoriId))
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
@@ -69,6 +72,8 @@ class KoleksiController extends Controller
             'jenisSlug' => 'search',
             'jenisLabel' => 'Hasil Pencarian',
             'q' => $q,
+            'kategoriId' => $kategoriId,
+            'kategoris' => Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']),
             'koleksis' => $koleksis,
             'perPage' => $perPage,
             'rekomendasi' => collect(),
@@ -81,6 +86,7 @@ class KoleksiController extends Controller
         abort_if(!$jenis, 404);
 
         $q = trim((string) $request->query('q', ''));
+        $kategoriId = (string) $request->query('kategori_id', '');
         $perPage = (int) $request->query('per_page', 10);
         $allowedPerPage = [10, 12, 24, 48];
         if (!in_array($perPage, $allowedPerPage, true)) {
@@ -98,6 +104,7 @@ class KoleksiController extends Controller
                         ->orWhere('tahun', 'like', "%{$q}%");
                 });
             })
+            ->when($kategoriId !== '', fn ($query) => $query->where('kategori_id', $kategoriId))
             ->latest()
             ->paginate($perPage)
             ->withQueryString();
@@ -122,6 +129,8 @@ class KoleksiController extends Controller
             'jenisSlug' => $jenisSlug,
             'jenisLabel' => $jenisLabel,
             'q' => $q,
+            'kategoriId' => $kategoriId,
+            'kategoris' => Kategori::query()->orderBy('nama_kategori')->get(['id', 'nama_kategori']),
             'koleksis' => $koleksis,
             'perPage' => $perPage,
             'rekomendasi' => $rekomendasi,
