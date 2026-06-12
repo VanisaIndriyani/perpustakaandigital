@@ -153,6 +153,7 @@
                                             <div class="mt-4 rounded-b-3xl bg-emerald-50/70 px-5 pb-5 pt-4">
                                                 <div class="text-xs text-slate-600">{{ $koleksi->pengarang }}</div>
                                                 <div class="mt-1 max-h-10 overflow-hidden text-sm font-semibold leading-5 text-slate-900 group-hover:text-emerald-700">{{ $koleksi->judul }}</div>
+                                                <div class="mt-2 text-xs text-emerald-700 font-medium">{{ $koleksi->kategori->nama_kategori ?? '—' }}</div>
                                                 <div class="mt-4 flex items-center justify-between gap-3">
                                                     <div class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200/70">{{ $koleksi->tahun ?? '—' }}</div>
                                                     <span class="inline-flex items-center justify-center rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white shadow-soft transition group-hover:bg-emerald-700">Detail</span>
