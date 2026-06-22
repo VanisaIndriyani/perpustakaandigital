@@ -47,6 +47,7 @@
                                                     'e-jurnal' => 'bg-green-600',
                                                     'skripsi' => 'bg-amber-500',
                                                     'ppl-kk' => 'bg-emerald-500',
+                                                    'kkn' => 'bg-cyan-600',
                                                     default => 'bg-emerald-600',
                                                 };
                                             @endphp

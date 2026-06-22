@@ -41,6 +41,7 @@
                 <a href="{{ route('koleksi.ebook') }}" class="{{ request()->routeIs('koleksi.ebook') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-600 hover:bg-white/80 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-semibold transition">E-Book</a>
                 <a href="{{ route('koleksi.skripsi') }}" class="{{ request()->routeIs('koleksi.skripsi') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-600 hover:bg-white/80 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Skripsi</a>
                 <a href="{{ route('koleksi.pplkk') }}" class="{{ request()->routeIs('koleksi.pplkk') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-600 hover:bg-white/80 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-semibold transition">PPL</a>
+                <a href="{{ route('koleksi.kkn') }}" class="{{ request()->routeIs('koleksi.kkn') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-600 hover:bg-white/80 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Repositori KKN</a>
                 <a href="{{ route('mahasiswa.turnitin.index') }}" class="{{ request()->routeIs('mahasiswa.turnitin.*') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-600 hover:bg-white/80 hover:text-slate-900' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Turnitin</a>
             </nav>
 
@@ -112,6 +113,7 @@
                     <a href="{{ route('koleksi.ebook') }}" class="{{ request()->routeIs('koleksi.ebook') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">E-Book</a>
                     <a href="{{ route('koleksi.skripsi') }}" class="{{ request()->routeIs('koleksi.skripsi') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Skripsi</a>
                     <a href="{{ route('koleksi.pplkk') }}" class="{{ request()->routeIs('koleksi.pplkk') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">PPL</a>
+                    <a href="{{ route('koleksi.kkn') }}" class="{{ request()->routeIs('koleksi.kkn') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Repositori KKN</a>
                     <a href="{{ route('mahasiswa.turnitin.index') }}" class="{{ request()->routeIs('mahasiswa.turnitin.*') ? 'bg-white text-emerald-700 shadow-soft ring-1 ring-emerald-200/60' : 'text-slate-700 hover:bg-white/80' }} rounded-xl px-3 py-2 text-sm font-semibold transition">Turnitin</a>
                 </div>
                 @guest

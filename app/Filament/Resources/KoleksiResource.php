@@ -115,6 +115,7 @@ class KoleksiResource extends Resource
                         'buku', 'e-book' => 'success',
                         'jurnal', 'e-jurnal' => 'info',
                         'skripsi' => 'warning',
+                        'kkn' => 'primary',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (?string $state) => Koleksi::jenisOptions()[$state] ?? $state),

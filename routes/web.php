@@ -11,6 +11,7 @@ Route::get('/buku', [\App\Http\Controllers\KoleksiController::class, 'index'])->
 Route::get('/e-book', [\App\Http\Controllers\KoleksiController::class, 'index'])->defaults('jenisSlug', 'e-book')->name('koleksi.ebook');
 Route::get('/skripsi', [\App\Http\Controllers\KoleksiController::class, 'index'])->defaults('jenisSlug', 'skripsi')->name('koleksi.skripsi');
 Route::get('/ppl-kk', [\App\Http\Controllers\KoleksiController::class, 'index'])->defaults('jenisSlug', 'ppl-kk')->name('koleksi.pplkk');
+Route::get('/repositori-kkn', [\App\Http\Controllers\KoleksiController::class, 'index'])->defaults('jenisSlug', 'kkn')->name('koleksi.kkn');
 
 Route::get('/koleksi/{koleksi}', [\App\Http\Controllers\KoleksiController::class, 'show'])->name('koleksi.show');
 

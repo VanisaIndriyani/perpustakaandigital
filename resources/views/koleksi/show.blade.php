@@ -9,6 +9,7 @@
             'e-book' => 'koleksi.ebook',
             'skripsi' => 'koleksi.skripsi',
             'ppl-kk' => 'koleksi.pplkk',
+            'kkn' => 'koleksi.kkn',
             default => 'home',
         };
         $jenisLabel = \Illuminate\Support\Arr::get(\App\Models\Koleksi::jenisOptions(), $koleksi->jenis, ucfirst($koleksi->jenis));

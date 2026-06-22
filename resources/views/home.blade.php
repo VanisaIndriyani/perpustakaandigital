@@ -20,7 +20,7 @@
                     <!-- <span class="block text-white/90">modern dan profesional</span> -->
                 </h1>
                 <p class="max-w-prose text-white/90">
-                   Welcome to Repository IAI DDI Sidenreng Rappang, Jelajahi Jurnal, E-Jurnal, Buku, E-Book, Skripsi dan Laporan PPL dengan tampilan yang modern dan profesional
+                   Welcome to Repository IAI DDI Sidenreng Rappang, Jelajahi Jurnal, E-Jurnal, Buku, E-Book, Skripsi, Laporan PPL, dan Repositori KKN dengan tampilan yang modern dan profesional
                 </p>
                 <div class="flex flex-wrap gap-2">
                     <a href="{{ route('koleksi.jurnal') }}" class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Lihat Jurnal Kampus</a>
@@ -37,6 +37,7 @@
                             'e-book' => 'koleksi.ebook',
                             'skripsi' => 'koleksi.skripsi',
                             'ppl-kk' => 'koleksi.pplkk',
+                            'kkn' => 'koleksi.kkn',
                             default => 'home',
                         };
                     @endphp
@@ -66,6 +67,7 @@
                     'e-book' => 'koleksi.ebook',
                     'skripsi' => 'koleksi.skripsi',
                     'ppl-kk' => 'koleksi.pplkk',
+                    'kkn' => 'koleksi.kkn',
                     default => 'home',
                 };
             @endphp
@@ -141,6 +143,7 @@
                                                         'e-jurnal' => 'bg-green-600',
                                                         'skripsi' => 'bg-amber-500',
                                                         'ppl-kk' => 'bg-emerald-500',
+                                                        'kkn' => 'bg-cyan-600',
                                                         default => 'bg-emerald-600',
                                                     };
                                                 @endphp
@@ -203,7 +206,7 @@
 
     <section class="mt-12 rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8" data-home-collection>
         @php
-            $tabOrder = ['jurnal', 'e-jurnal', 'buku', 'e-book', 'skripsi', 'ppl-kk'];
+            $tabOrder = ['jurnal', 'e-jurnal', 'buku', 'e-book', 'skripsi', 'ppl-kk', 'kkn'];
         @endphp
 
         <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
@@ -254,6 +257,7 @@
                         'e-book' => 'koleksi.ebook',
                         'skripsi' => 'koleksi.skripsi',
                         'ppl-kk' => 'koleksi.pplkk',
+                        'kkn' => 'koleksi.kkn',
                         default => 'home',
                     };
                 @endphp
@@ -280,6 +284,7 @@
                                                             'e-jurnal' => 'bg-green-600',
                                                             'skripsi' => 'bg-amber-500',
                                                             'ppl-kk' => 'bg-emerald-500',
+                                                            'kkn' => 'bg-cyan-600',
                                                             default => 'bg-emerald-600',
                                                         };
                                                     @endphp

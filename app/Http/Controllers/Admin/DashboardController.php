@@ -50,6 +50,7 @@ class DashboardController extends Controller
                 'jurnal' => 'bg-lime-600',
                 'e-jurnal' => 'bg-green-600',
                 'skripsi' => 'bg-amber-500',
+                'kkn' => 'bg-cyan-600',
                 default => 'bg-emerald-600',
             };
             return $item;

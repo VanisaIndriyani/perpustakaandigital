@@ -65,9 +65,10 @@ class DatabaseSeeder extends Seeder
             'Kesehatan',
         ];
 
-        $kategoriIds = collect($kategoriNames)
-            ->map(fn (string $name) => Kategori::query()->firstOrCreate(['nama_kategori' => $name])->id)
-            ->values();
+        $kategoriMap = collect($kategoriNames)
+            ->mapWithKeys(fn (string $name) => [$name => Kategori::query()->firstOrCreate(['nama_kategori' => $name])->id]);
+
+        $kategoriIds = $kategoriMap->values();
 
         if (class_exists(\Faker\Factory::class)) {
             $faker = \Faker\Factory::create('id_ID');
@@ -85,6 +86,47 @@ class DatabaseSeeder extends Seeder
                     'file_pdf' => null,
                 ]);
             }
+        }
+
+        $sampleKknItems = [
+            [
+                'judul' => 'Laporan KKN Desa Bulo Wattang 2026',
+                'pengarang' => 'Nur Aisyah',
+                'tahun' => 2026,
+                'kategori' => 'Manajemen',
+                'deskripsi' => 'Laporan KKN mahasiswa yang membahas program pemberdayaan UMKM, digitalisasi pencatatan usaha, dan pelatihan administrasi desa.',
+            ],
+            [
+                'judul' => 'Laporan KKN Kelurahan Rijang Pittu 2026',
+                'pengarang' => 'Muhammad Irfan',
+                'tahun' => 2026,
+                'kategori' => 'Teknik Informatika',
+                'deskripsi' => 'Dokumen laporan kegiatan KKN mahasiswa terkait pendampingan literasi digital, pengenalan aplikasi administrasi, dan edukasi keamanan data.',
+            ],
+            [
+                'judul' => 'Laporan KKN Desa Mojong 2025',
+                'pengarang' => 'Siti Rahmah',
+                'tahun' => 2025,
+                'kategori' => 'Akuntansi',
+                'deskripsi' => 'Laporan akhir KKN mahasiswa berisi kegiatan pendampingan penyusunan laporan keuangan sederhana dan edukasi pengelolaan kas masyarakat.',
+            ],
+        ];
+
+        foreach ($sampleKknItems as $item) {
+            Koleksi::query()->updateOrCreate(
+                [
+                    'judul' => $item['judul'],
+                    'jenis' => 'kkn',
+                ],
+                [
+                    'pengarang' => $item['pengarang'],
+                    'tahun' => $item['tahun'],
+                    'kategori_id' => $kategoriMap[$item['kategori']] ?? $kategoriIds->first(),
+                    'deskripsi' => $item['deskripsi'],
+                    'cover' => null,
+                    'file_pdf' => null,
+                ],
+            );
         }
     }
 }
