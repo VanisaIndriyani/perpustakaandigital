@@ -20,7 +20,7 @@
                     <!-- <span class="block text-white/90">modern dan profesional</span> -->
                 </h1>
                 <p class="max-w-prose text-white/90">
-                   Welcome to Repository IAI DDI Sidenreng Rappang, Jelajahi Jurnal, E-Jurnal, Buku, E-Book, Skripsi, Laporan PPL, dan Repositori KKN dengan tampilan yang modern dan profesional
+                   Welcome to Repository IAI DDI Sidenreng Rappang, Jelajahi Jurnal, E-Jurnal, Buku, E-Book, Skripsi, Laporan PPL, dan KKN dengan tampilan yang modern dan profesional
                 </p>
                 <div class="flex flex-wrap gap-2">
                     <a href="{{ route('koleksi.jurnal') }}" class="rounded-xl bg-white px-4 py-2 text-sm font-semibold text-emerald-700 shadow-soft transition hover:bg-emerald-50">Lihat Jurnal Kampus</a>

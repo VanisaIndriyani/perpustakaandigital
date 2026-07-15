@@ -37,7 +37,7 @@ class Koleksi extends Model
             'e-jurnal' => 'E-Jurnal',
             'skripsi' => 'Skripsi',
             'ppl-kk' => 'PPL',
-            'kkn' => 'Repositori KKN',
+            'kkn' => 'KKN',
         ];
     }
 
